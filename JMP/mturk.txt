@@ -1,0 +1,47 @@
+<!-- You must include this JavaScript file -->
+<script src="https://assets.crowd.aws/crowd-html-elements.js"></script>
+
+<!-- For the full list of available Crowd HTML Elements and their input/output documentation,
+      please refer to https://docs.aws.amazon.com/sagemaker/latest/dg/sms-ui-template-reference.html -->
+
+<!-- You must include crowd-form so that your task submits answers to MTurk -->
+<crowd-form answer-format="flatten-objects">
+
+    <div>
+        <strong>Instructions: </strong> 
+        <span>Please watch the video carefully and answer the question</span>
+        <div>
+            <div>
+                <p><strong>Task video:</strong></p>
+
+                <!-- Your website URLs will be substituted for the "url" variable when you publish 
+                       a batch with an input file containing multiple website URLs -->
+                <iframe width="840" height="630" src="${video_url}">
+                </iframe>
+            </div>
+        <br/>
+        <br/>
+          <label class="col-md-4 control-label" for="radios">Does this video mention <strong>a YouTuber whose nick name is "Mr. Beast"</strong> in speech or in-frame pictures?</label>
+          <div class="radio">
+            <label for="radios-0">
+              <input type="radio" name="radios" id="radios-0" value="1">
+              Yes
+            </label>
+        	</div>
+          <div class="radio">
+            <label for="radios-1">
+              <input type="radio" name="radios" id="radios-1" value="2">
+              No
+            </label>
+        	</div>
+          </div>
+          <div class="radio">
+            <label for="radios-2">
+              <input type="radio" name="radios" id="radios-2" value="3">
+              I am not sure
+            </label>
+        	</div>
+          </div>
+        </div>
+    </div>
+</crowd-form>
