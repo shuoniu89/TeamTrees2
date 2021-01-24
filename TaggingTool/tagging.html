@@ -245,11 +245,12 @@
   let continuing = false;
   let NUMBER_OF_QUESTIONS  = 4;
   let FINAL_HEADER = ["isIncluded", "diagnostic", "prognostic", "motivational"];
+  let hasUploadedVideoFile = false;
+  let VIDEO_FILE;
 
   document.getElementById('uploadTaggedFile').addEventListener('change',loadTaggedFile);
   document.getElementById('uploadVideoFile').addEventListener('change', loadVideoFile);
 
-  // CLEAR QUESTION CHECKBOXES
   clearAnswers();
 
   // hide or show image
@@ -270,15 +271,16 @@
       let reader = new FileReader();
       reader.onloadend = function (evt) {
         let dataUrl = evt.target.result;
+        console.log(dataUrl)
         // The following call results in an "Access denied" error in IE.
         storeTaggedVid(dataUrl);
-      };
+      }
       reader.readAsDataURL(file);
     }
   }
 
   // STORE TAGGED VIDEO DATA
-  let storeTaggedVid = function (csvUrl) { // argument = video Url
+  let storeTaggedVid = function (csvUrl) { // argument = csv file
     d3.csv(csvUrl, function (rows) {
       rows.forEach(function (d) { // for each row in the csv
         answers.push({
@@ -287,27 +289,41 @@
           "isIncluded" : d["isIncluded"],
           "diagnostic":d["diagnostic"],
           "prognostic":d["prognostic"],
-          "motivational":d["motivation"]
+          "motivational":d["motivational"]
         });
         totalTagged++;
-      });
-    });
-  };
+      })
+    })
+    // Refresh video embed based on new progress file
+    if (hasUploadedVideoFile)
+      loadVideoFileFromFile(VIDEO_FILE);
+  }
 
-  // LOAD VIDEO FILE
+  // LOAD VIDEO FILE FROM EVENT
   function loadVideoFile(evt) {
     url_list = [];
     currentIndex = 0;
     let file = evt.target.files[0];
+    if (file){
+      hasUploadedVideoFile = true;
+      VIDEO_FILE = file;
+      loadVideoFileFromFile(file);
+    }
+    clearAnswers();
+  }
+
+  // LOAD VIDEO FILE FROM ACTUAL FILE
+  function loadVideoFileFromFile(file){
+    url_list = [];
+    currentIndex = 0;
     if (file) {
       let reader = new FileReader();
       reader.onloadend = function (evt) {
         let dataUrl = evt.target.result;
         // The following call results in an "Access denied" error in IE.
         previewCsvUrl(dataUrl);
-      };
+      }
       reader.readAsDataURL(file);
-      clearAnswers();
     }
   }
 
@@ -356,11 +372,9 @@
   }
 
   function clearAnswers() {
-    let i;
     let choices = document.getElementsByClassName('checkbox');
-    for (i = 0; i < choices.length; i++)
+    for (var i = 0; i < choices.length; i++)
       choices[i].checked = false;
-
 
     let radio_choices = document.getElementsByClassName("radio");
     for (i = 0; i < radio_choices.length; i++)
@@ -369,6 +383,7 @@
   }
 
   // Check that all questions have been answered
+  // If question 0 (include?) is "No," user can click save and next
   function isCompleted() {
     let completed = true;
     let answer_list = [];
@@ -380,7 +395,7 @@
         hasCheckedInclude = true;
     }
     console.log(hasCheckedInclude);
-    let isIncluded = include_question[0].checked;
+    let isIncluded = include_question[0].checked; //THE POSITION OF "YES" IN QUESTION 0
 
     if (isIncluded){
       for(i = 0; i < NUMBER_OF_QUESTIONS; i++) {
@@ -411,6 +426,7 @@
 
 
   // function to calculate the result of the survey
+  // AND SAVE THEM IN A GLOBAL VARIABLE CALLED answers
   function saveAnswers() {
     let vid = url_list[currentIndex]["videoId"];
     if (vid == "#NAME?"){
@@ -442,8 +458,7 @@
 
     answers.push(tagging);
     clearAnswers();
-    currentIndex = currentIndex + 1;
-    totalTagged++;
+    currentIndex++; totalTagged++;
     updateVideoUrl(currentIndex);
   }
 
