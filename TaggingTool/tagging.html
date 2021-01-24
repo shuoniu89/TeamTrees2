@@ -12,15 +12,35 @@
     body {
       font-family: sans-serif;
       background: #85B1EC;
-      font-size:15px
+      font-size:15px;
     }
 
     h2 {
-      margin: 5px 0;font-size:20px;
+      margin: 5px;
+      font-size:16px;
     }
 
     h3 {
-      margin: 5px; font-size:15px;
+      margin: 5px;
+      font-size:20px;
+    }
+
+    htitle {
+      margin: 15px;
+      font-size: 16px;
+      font-weight: bold;
+      display: block;
+      color: darkblue;
+    }
+
+    .options {
+      margin-top: 5px;
+      margin-left: 37px;
+      display: block;
+      font-weight: normal;
+      font-size: 12px;
+      width: 950px;
+      line-height: 1.6;
     }
 
     #wrapper {
@@ -45,6 +65,13 @@
       border-bottom: 3px solid #333;
     }
 
+    span {
+      display:inline-block;
+      font-size: 12px;
+      text-indent: 30px;
+      font-style: normal;
+      font-weight: normal;
+    }
 
     #submit {
       background: green;
@@ -84,7 +111,7 @@
 </head>
 <body>
 <div class="videoWrapper">
-  <iframe id="videoframe" width="640" height="360" src="https://www.youtube.com/embed/"
+  <iframe id="videoframe" width="840" height="560" src="https://www.youtube.com/embed/"
   ></iframe>
 </div>
 <div id="wrapper">
@@ -107,8 +134,8 @@
       <br/>
       <!--QUESTION 0-->
       <div id="q0">
-        <h3>Should we include this video? "No" includes non-English videos, private/deleted videos, etc.
-        If you select No, you can go directly to Save answers and Next at the end of the page.</h3>
+        <htitle>Should we include this video? "No" includes non-English videos, private/deleted videos, etc.
+        If you select No, you can go directly to Save answers and Next at the end of the page.</htitle>
         <label><input type="radio" name="q0"  class="radio" value="true">
           Yes
         </label><br/>
@@ -118,112 +145,341 @@
       </div>
       </br>
 
-      <h3 style="font-style:italic;font-size:15px;font-weight: normal;">DIAGNOSTIC TABLE</h3>
-      <input type="button" value="Show/hide table" onclick="hideImage('diagnostic_img');">
-      <img id="diagnostic_img" src="https://i.imgur.com/ssRHx21.png" height = "auto" width="900" style = "display:block;"/>
-      <br/>
-      <br/>
-
       <!-- QUESTION 1 -->
       <div id="q1">
-        <h3>What is the diagnostic/problem being framed? Check all that apply.</h3>
-        <label><input type="checkbox" name="q1" class="checkbox" value="climate change">
-          Climate change
+        <htitle>What is the diagnostic/problem being framed? Check all that apply.</htitle><br>
+
+        <label>
+          <input id="q1_climate" type="checkbox" name="q1" class="checkbox"
+                 value="climate change">
+          <label for="q1_climate" style="font-weight:bold;font-size:17px">Climate change
+          <div class="options">
+            Problems related to the change of climate, weather, or atmosphere,
+            such as climate change, global warming, CO2 emissions.
+            <br>
+            Examples: "Earth is getting hotter than ever", "too much CO2 in the air"
+          </div>
+          </label>
         </label><br/>
-        <label><input type="checkbox" name="q1"  class="checkbox" value="deforestation">
-          Deforestation
+
+        <label>
+          <input id="q1_deforestation" type="checkbox" name="q1" class="checkbox"
+                 value="deforestation">
+          <label for="q1_deforestation" style="font-weight:bold;font-size:17px">Deforestation
+            <div class="options">
+              Problems in the decrease in forest or trees,
+              such as wildfires, deforestation, or wildlife extinction.
+              <br>
+              Examples: "trees are being cut down at an alarming rate", "wildfire is rampant"
+            </div>
+          </label>
         </label><br/>
-        <label><input type="checkbox" name="q1"  class="checkbox" value="inaction">
-          Inaction
+
+        <label>
+          <input id="q1_inaction" type="checkbox" name="q1" class="checkbox"
+                 value="inaction">
+          <label for="q1_inaction" style="font-weight:bold;font-size:17px">Inaction
+            <div class="options">
+              Inaction or low-awareness of the government and public, or the denial of climate change.
+              <br>
+              Examples: "people are complaining but no action","the government is doing too little"
+            </div>
+          </label>
         </label><br/>
-        <label><input type="checkbox" name="q1"  class="checkbox" value="other issues">
-          Other issues
+
+        <label>
+          <input id="q1_other" type="checkbox" name="q1" class="checkbox"
+                 value="none_apply">
+          <label for="q1_other" style="font-weight:bold;font-size:17px">Other issues
+            <div class="options">
+              Other sustainability problems except for climate change, deforestation, and inaction,
+              such as human waste, lack of recycling, etc.
+              <br>
+              Examples: "too much plastics","reduce waste"
+            </div>
+          </label>
         </label><br/>
-        <label><input type="checkbox" name="q1"  class="checkbox" value="none_apply">
-          None of the options is apparent.
-        </label>
+
+        <label>
+          <input id="q1_none" type="checkbox" name="q1" class="checkbox"
+                 value="none_apply">
+          <label for="q1_none" style="font-weight:bold;font-size:17px">None
+            <div class="options">
+              None of the options is apparent or applicable.
+            </div>
+          </label>
+        </label><br/>
       </div>
 
       </br>
-      <h3 style="font-style:italic;font-size:15px;font-weight: normal;">PROGNOSTIC TABLE</h3>
-      <input type="button" value="Show/hide table" onclick="hideImage('prognostic_img');">
-      <img id="prognostic_img" src="https://i.imgur.com/EXuTf7S.png" height = "auto" width="900" style = "display:block;"/>
-      <br/>
       <br/>
 
       <!-- QUESTION 2 -->
       <div id="q2">
-        <h3>What does this video try to do? If the video has a MAIN theme,
-          please only check the main theme. If there are multiple main themes, check all that apply.</h3>
-        <label><input type="checkbox" name="q2" class="checkbox" value="spread the word">
-          Spread the word
+        <htitle>What does this video try to do? If the video has a MAIN theme,
+          please only check the main theme. If there are multiple main themes, check all that apply.</htitle><br>
+
+        <label>
+          <input id="q2_spread" type="checkbox" name="q2" class="checkbox"
+                 value="spread the word">
+          <label for="q2_spread" style="font-weight:bold;font-size:17px"> Spread the word
+            <div class="options">
+              The main content of the video is introducing the #TeamTrees campaign.
+              The video announces and advertises the #TeamTrees campaign by showing mission, activities, impact, or statistics.
+              <br>
+              Examples: Showing statistics, numbers, show big donors.
+              Introduce the events, watch dogs in park to talk about TeamTrees, unboxing a TeamTrees Tshirt
+            </div>
+          </label>
         </label><br/>
-        <label><input type="checkbox" name="q2"  class="checkbox" value="environmental discussion">
-          Environmental discussion
+
+        <label>
+          <input id="q2_environmental_discussion" type="checkbox" name="q2" class="checkbox"
+                 value="environmental discussion">
+          <label for="q2_environmental_discussion" style="font-weight:bold;font-size:17px"> Environmental discussion
+            <div class="options">
+              The video shows or discusses problems related to the #TeamTrees campaign,
+              including climate change, deforestation, natural disasters, etc.
+              <br>
+              Examples: In depth explanation on deforestation, showing stats on human waste, show images of wildfires
+            </div>
+          </label>
         </label><br/>
-        <label><input type="checkbox" name="q2"  class="checkbox" value="shoutout">
-          Shout-out
+
+        <label>
+          <input id="q2_shoutout" type="checkbox" name="q2" class="checkbox"
+                 value="shout-out">
+          <label for="q2_environmental_discussion" style="font-weight:bold;font-size:17px"> Shout-out
+            <div class="options">
+              The video embeds the #TeamTrees information, generally short, at the beginning, middle, or end
+              of the video as a shout-out, but the main part of the video is not relevant to the campaign.
+              <br>
+              Examples: Chat with audience while playing GTA, answer a bunch of random questions.
+                          One of them is his reactions to teamtrees;
+                        Doctor reacting to medical memes and give a short shout-out to TeamTrees.
+            </div>
+          </label>
         </label><br/>
-        <label><input type="checkbox" name="q2"  class="checkbox" value="share videos">
-          Share videos
+
+        <label>
+          <input id="q2_share" type="checkbox" name="q2" class="checkbox"
+                 value="share videos">
+          <label for="q2_share" style="font-weight:bold;font-size:17px"> Share videos
+            <div class="options">
+              The video is made by sharing other's #TeamTrees videos or compiling other's #TeamTrees video clips.
+              The video may show, comment on, and/or react to the videos created by other YouTubers.
+              <br>
+              Examples: reacting to environmental memes, reacting to Mr. Beast videos,
+              sharing TikTok videos of TeamTrees
+            </div>
+          </label>
         </label><br/>
-        <label><input type="checkbox" name="q2" class="checkbox" value="donation">
-          Donation
+
+        <label>
+          <input id="q2_donation" type="checkbox" name="q2" class="checkbox"
+                 value="donation">
+          <label for="q2_donation" style="font-weight:bold;font-size:17px"> Donation
+            <div class="options">
+              The video is about the donating activiteis to the teamtrees.org website,
+              or various fundraising activities to show the YouTubers have donated to the #TeamTrees
+              campaign.
+              <br>
+              Examples: livestreaming to fundraising for TT, play arcade games and
+              donate $1 for every ticket won, showing donation website and donate
+            </div>
+          </label>
         </label><br/>
-        <label><input type="checkbox" name="q2"  class="checkbox" value="plant trees">
-          Plant trees
+
+        <label>
+          <input id="q2_plant" type="checkbox" name="q2" class="checkbox"
+                 value="plant trees">
+          <label for="q2_plant" style="font-weight:bold;font-size:17px"> Plant trees
+            <div class="options">
+              The video is about showing the method, activities, or process of
+              planting real trees or plants at home or in the wild
+              <br>
+              Examples: Go to store and buy trees to plant, plant pine trees from seeds
+            </div>
+          </label>
         </label><br/>
-        <label><input type="checkbox" name="q2"  class="checkbox" value="knowledge">
-          Knowledge
+
+        <label>
+          <input id="q2_knowledge" type="checkbox" name="q2" class="checkbox"
+                 value="knowledge">
+          <label for="q2_knowledge" style="font-weight:bold;font-size:17px"> Knowledge
+            <div class="options">
+              The video explains knowledge related to trees or environment in general.
+              It may include the knolwedge or fun facts about trees or tree-related things
+              (e.g. arts, laws, stories)
+              <br>
+              Examples: biology video explaining photosynthesis, explaining studies on plants
+              making auditory  sounds when hurt, show historical art made by trees
+            </div>
+          </label>
         </label><br/>
-        <label><input type="checkbox" name="q2"  class="checkbox" value="gameplay">
-          Gameplay
+
+        <label>
+          <input id="q2_gameplay" type="checkbox" name="q2" class="checkbox"
+                 value="gameplay">
+          <label for="q2_gameplay" style="font-weight:bold;font-size:17px"> Gameplay
+            <div class="options">
+              The video is a live or recorded video games inspired by #TeamTrees.
+              The video shows gaming activities such as planting virtual trees or
+              performing #TeamTrees-related activities.
+              <br>
+              Examples: plant 20,000,000 trees in minecraft, tree-related video games
+            </div>
+          </label>
         </label><br/>
-        <label><input type="checkbox" name="q2"  class="checkbox" value="creation">
-          Creation
+
+        <label>
+          <input id="q2_creation" type="checkbox" name="q2" class="checkbox"
+                 value="creation">
+          <label for="q2_creation" style="font-weight:bold;font-size:17px"> Creation
+            <div class="options">
+              The video is a live or recorded video games inspired by #TeamTrees.
+              The video shows artistic or funny creations inspired by or related to #TeamTrees,
+              usually through creation of arts or interesting items (e.g. tree related music,
+              drawing, crafts, funny things, etc.)
+              <br>
+              Examples: photoshopping trees back into the picture, digital paintings of trees,
+              made a song about trees
+            </div>
+          </label>
         </label><br/>
-        <label><input type="checkbox" name="q2"  class="checkbox" value="criticism">
-          Criticism
+
+        <label>
+          <input id="q2_criticism" type="checkbox" name="q2" class="checkbox"
+                 value="criticism">
+          <label for="q2_criticism" style="font-weight:bold;font-size:17px"> Criticism
+            <div class="options">
+              The video is about showing criticism or negative opinions on the #TeamTrees campaign.
+              <br>
+              Examples: Comment on other TeamTrees video and critize that TeamTrees is not effective.
+              Show data about climate change statistics. Explain climate change reality.
+            </div>
+          </label>
         </label><br/>
-        <label><input type="checkbox" name="q2"  class="checkbox" value="none_apply">
-          None of the options is apparent.
-        </label>
+
+        <label>
+          <input id="q2_none" type="checkbox" name="q2" class="checkbox"
+                 value="none_apply">
+          <label for="q2_none" style="font-weight:bold;font-size:17px">None
+            <div class="options">
+              None of the options is apparent or applicable.
+            </div>
+          </label>
+        </label><br/>
       </div>
 
       </br>
-      <h3 style="font-style:italic;font-size:15px;font-weight: normal;">MOTIVATIONAL TABLE</h3>
-      <input type="button" value="Show/hide table" onclick="hideImage('motivational_img');">
-      <img id="motivational_img" src="https://i.imgur.com/8aV2ptZ.png" height = "auto" width="900" style = "display:block;"/>
-      <br/>
       <br/>
 
       <!-- QUESTION 3 -->
       <div id="q3">
-        <h3>What/How does the video motivate viewers to participate? Check all that apply.</h3>
-        <label><input type="checkbox" name="q3" class="checkbox" value="donation">
-          Donation
+        <htitle>What/How does the video motivate viewers to participate? Check all that apply.</htitle><br>
+
+        <label>
+          <input id="q3_donation" type="checkbox" name="q3" class="checkbox"
+                 value="donation">
+          <label for="q3_donation" style="font-weight:bold;font-size:17px"> Donation
+            <div class="options">
+              The video calls for donating to the campaign.
+              <br>
+              Examples: "Go donate to TT", "any little amount would help"
+            </div>
+          </label>
         </label><br/>
-        <label><input type="checkbox" name="q3"  class="checkbox" value="environmental actions">
-          Environmental actions
+
+        <label>
+          <input id="q3_environment" type="checkbox" name="q3" class="checkbox"
+                 value="environment actions">
+          <label for="q3_environment" style="font-weight:bold;font-size:17px"> Environment actions
+            <div class="options">
+              The video calls for protecting the environment and take general actions
+              that benefits the environment.
+              <br>
+              Examples: "make earth a better place", "recycle, clean up streams"
+            </div>
+          </label>
         </label><br/>
-        <label><input type="checkbox" name="q3"  class="checkbox" value="join activities">
-          Join activities
+
+        <label>
+          <input id="q3_join" type="checkbox" name="q3" class="checkbox"
+                 value="join activities">
+          <label for="q3_join" style="font-weight:bold;font-size:17px"> Join activities
+            <div class="options">
+              The video calls for participating in the activities performed in the video,
+              such as joining in the game or the fundraising activities of the YouTuber.
+              <br>
+              Examples: Join the server to plant trees together, Buy my art to help me donate
+            </div>
+          </label>
         </label><br/>
-        <label><input type="checkbox" name="q3"  class="checkbox" value="more trees">
-          More trees
+
+        <label>
+          <input id="q3_moretrees" type="checkbox" name="q3" class="checkbox"
+                 value="more trees">
+          <label for="q3_moretrees" style="font-weight:bold;font-size:17px"> More trees
+            <div class="options">
+              The video calls for planting more trees.
+              <br>
+              Examples: "Plant you own trees", "Gotta support building trees"
+            </div>
+          </label>
         </label><br/>
-        <label><input type="checkbox" name="q3" class="checkbox" value="tree benefits">
-          Tree benefits
+
+        <label>
+          <input id="q3_treebenefits" type="checkbox" name="q3" class="checkbox"
+                 value="tree benefits">
+          <label for="q3_treebenefits" style="font-weight:bold;font-size:17px"> Tree benefits
+            <div class="options">
+              The video gives the rationale for planting more trees, usually by
+              explaining the benefits of trees to the environment.
+              <br>
+              Examples: "We need more trees, we need more oxygen", "you can make a change by planting trees",
+              "trees are great for our planet"
+            </div>
+          </label>
         </label><br/>
-        <label><input type="checkbox" name="q3"  class="checkbox" value="celebrity effect">
-          Celebrity effect
+
+        <label>
+          <input id="q3_celebrity" type="checkbox" name="q3" class="checkbox"
+                 value="celebrity effect">
+          <label for="q3_celebrity" style="font-weight:bold;font-size:17px"> Celebrity effect
+            <div class="options">
+              The video mentions celebrities' (e.g. MrBeast, Elon Musk) involvement in #TeamTrees to explain
+              the reason why the YouTuber is participating in the campaign.
+              <br>
+              Examples: "Help Mr. Beast achieve his goal", "Make Elon Musk proud"
+            </div>
+          </label>
         </label><br/>
-        <label><input type="checkbox" name="q3"  class="checkbox" value="community effect">
-          Community effect
+
+        <label>
+          <input id="q3_community" type="checkbox" name="q3" class="checkbox"
+                 value="community effect">
+          <label for="q3_community" style="font-weight:bold;font-size:17px"> Community effect
+            <div class="options">
+              The video mentions community's collaboration or actions as the reason why the YouTuber is
+              participating, such as asking the viewers to watch other #TeamTrees video from other
+              non-celebrity YouTubers.
+              <br>
+              Examples: "Check out, like, and share other TT videos", "join the biggest youtube collab",
+              "make a positive change together", "if you can't donate, like and share"
+            </div>
+          </label>
         </label><br/>
-        <label><input type="checkbox" name="q3"  class="checkbox" value="none_apply">
-          None of the options is apparent.
-        </label>
+
+        <label>
+          <input id="q3_none" type="checkbox" name="q3" class="checkbox"
+                 value="none_apply">
+          <label for="q3_none" style="font-weight:bold;font-size:17px">None
+            <div class="options">
+              None of the options is apparent or applicable.
+            </div>
+          </label>
+        </label><br/>
       </div>
 
     </form>
@@ -233,7 +489,6 @@
   <button type="download" id="download" onclick='downloadCSV({ filename: "progress.csv" });'>Finish & Download</button>
   <label for="totalVideosTagged" style="font-style: italic">Total videos tagged: </label>
   <text id="totalVideosTagged" style="font-size:20px"></text>
-  <h3 style="margin: 1px;font-size:15px;font-style: italic">After Finish & Download, move the progress.csv file to the Tagging_Tool folder to import your progress later.</h3>
 </div>
 
 
