@@ -2,771 +2,836 @@
 
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 
-  <!--    COLORS AND FONTS-->
+    <!--    COLORS AND FONTS-->
 
-  <style>
+    <style>
 
-    body {
-      font-family: sans-serif;
-      background: #85B1EC;
-      font-size:15px;
-    }
+        body {
+            font-family: sans-serif;
+            background: #85B1EC;
+            font-size: 15px;
+        }
 
-    h2 {
-      margin: 5px;
-      font-size:16px;
-    }
+        h2 {
+            margin: 5px;
+            font-size: 16px;
+        }
 
-    h3 {
-      margin: 5px;
-      font-size:20px;
-    }
+        h3 {
+            margin: 5px;
+            font-size: 20px;
+        }
 
-    htitle {
-      margin: 15px;
-      font-size: 16px;
-      font-weight: bold;
-      display: block;
-      color: darkblue;
-    }
+        p {
+            margin: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            display: block;
+            color: darkblue;
+        }
 
-    .options {
-      margin-top: 5px;
-      margin-left: 37px;
-      display: block;
-      font-weight: normal;
-      font-size: 12px;
-      width: 950px;
-      line-height: 1.6;
-    }
+        .options {
+            margin-top: 5px;
+            margin-left: 37px;
+            display: block;
+            font-weight: normal;
+            font-size: 12px;
+            width: 580px;
+            line-height: 1.6;
+        }
 
-    #wrapper {
-      width: 980px;
-      margin: 0 auto;
-      background: white;
-      padding: 10px 15px;
-      border-radius: 10px;
-    }
+        input {
+            margin: 5px 10px;
+            font-size: small;
+        }
 
-    input {
-      margin: 5px 10px;
-    }
+        button {
+            font-size: 15px;
+            padding: 10px;
+            margin: 20px 0;
+            color: white;
+            border: 0;
+            border-radius: 10px;
+            border-bottom: 3px solid #333;
+        }
 
-    button {
-      font-size: 15px;
-      padding: 10px;
-      margin: 20px 0;
-      color: white;
-      border: 0;
-      border-radius: 10px;
-      border-bottom: 3px solid #333;
-    }
+        span {
+            display: inline-block;
+            font-size: 12px;
+            text-indent: 30px;
+            font-style: normal;
+            font-weight: normal;
+        }
 
-    span {
-      display:inline-block;
-      font-size: 12px;
-      text-indent: 30px;
-      font-style: normal;
-      font-weight: normal;
-    }
+        #submit {
+            background: green;
+        }
 
-    #submit {
-      background: green;
-    }
+        #download {
+            background: cornflowerblue;
+        }
 
-    #download {
-      background: cornflowerblue;
-    }
+        #answer {
+            border: 1px dashed #ccc;
+            background: #eee;
+            padding: 10px;
+        }
 
-    #answer {
-      border: 1px dashed #ccc;
-      background: #eee;
-      padding: 10px;
-    }
+        #videoWrapper {
+            width: 50%;
+            display: flex;
+            vertical-align: top;
+            float: left;
+            position: fixed;
+            justify-content: flex-end;
+            flex-direction: column;
 
-    .videoWrapper {
-      display: flex;
-      justify-content: center;
-      vertical-align: top;
-    }
+        }
 
-    .iframe {
-      width: 800px;
-    }
+        #wrapper {
+            width: 50%;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            float: right;
+        }
 
-    html,body {padding:0;margin:0;}
-    .wrap {
-      font:13px Arial, san-serif;
-    }
+        html, body {
+            padding: 0;
+            margin: 0;
+        }
 
-  </style>
+        .wrap {
+            font: 13px Arial, san-serif;
+        }
 
-  <!--BUTTONS AND QUESTIONS-->
+    </style>
 
-  <script src="https://d3js.org/d3.v4.js" charset="utf-8"></script>
-  <script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
+    <!--BUTTONS AND QUESTIONS-->
+
+    <script src="https://d3js.org/d3.v4.js" charset="utf-8"></script>
+    <script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
 </head>
 <body>
-<div class="videoWrapper">
-  <iframe id="videoframe" width="840" height="560" src="https://www.youtube.com/embed/"
-  ></iframe>
+<div id="videoWrapper">
+    <div>
+        <iframe id="videoframe" width="100%" height="500px" src="https://www.youtube.com/embed/"
+        ></iframe>
+    </div><br>
+    <div>
+        <h2>Video tagging tool</h2>
+        <label for="uploadTaggedFile" style="font-size:15px;">Upload your progress file:</label>
+        <input type="file" accept=".csv" value="Upload progress file" style="margin: 5px;" id="uploadTaggedFile">
+        <br/>
+<!--        <label for="uploadVideoFile" style="font-size:15px;">Upload video data set (required):</label>-->
+<!--        <input type="file" accept=".csv" value="Upload data file" style="margin: 5px;" id="uploadVideoFile">-->
+        <br/><br/>
+<!--        <label for="title" style="font-style: italic">Title:</label>-->
+<!--        <a href="#" id="link" target="_blank"><h2 id="title" style="font-size:20px"></h2></a>-->
+<!--        <label for="viewCount" style="font-style: italic">Views:</label>-->
+<!--        <h2 id="viewCount" style="font-size:20px"></h2>-->
+        <br/>
+    </div>
 </div>
 <div id="wrapper">
-  <!--    <input type="button" id="button2" value="Display your progress" onclick="display_array();"></input>-->
-  <h2>Video tagging tool</h2>
-  <label for="uploadTaggedFile" style = "font-size:15px;">Upload your progress (optional):</label>
-  <input type ="file" accept=".csv" value = "Upload progress file" style="margin: 5px;" id="uploadTaggedFile">
-  <br/>
-  <label for="uploadVideoFile" style = "font-size:15px;">Upload video data set (required):</label>
-  <input type="file" accept=".csv" value = "Upload data file" style="margin: 5px;" id="uploadVideoFile">
-  <br/><br/>
-  <label for="title" style="font-style: italic">Title:</label>
-  <a href="#" id="link" target="_blank"> <h2 id="title" style="font-size:20px"></h2> </a>
-  <label for="viewCount" style="font-style: italic">Views:</label>
-  <h2 id="viewCount" style="font-size:20px"></h2>
-  <br/>
-  <div class="wrap">
-    <form action="">
 
-      <br/>
-      <!--QUESTION 0-->
-      <div id="q0">
-        <htitle>Should we include this video? "No" includes non-English videos, private/deleted videos, etc.
-        If you select No, you can go directly to Save answers and Next at the end of the page.</htitle>
-        <label><input type="radio" name="q0"  class="radio" value="true">
-          Yes
-        </label><br/>
-        <label><input type="radio" name="q0"  class="radio" value="false">
-          No
-        </label>
-      </div>
-      </br>
+    <div class="wrap">
+        <form action="">
 
-      <!-- QUESTION 1 -->
-      <div id="q1">
-        <htitle>What is the diagnostic/problem being framed? Check all that apply.</htitle><br>
-
-        <label>
-          <input id="q1_climate" type="checkbox" name="q1" class="checkbox"
-                 value="climate change">
-          <label for="q1_climate" style="font-weight:bold;font-size:17px">Climate change
-          <div class="options">
-            Problems related to the change of climate, weather, or atmosphere,
-            such as climate change, global warming, CO2 emissions.
-            <br>
-            Examples: "Earth is getting hotter than ever", "too much CO2 in the air"
-          </div>
-          </label>
-        </label><br/>
-
-        <label>
-          <input id="q1_deforestation" type="checkbox" name="q1" class="checkbox"
-                 value="deforestation">
-          <label for="q1_deforestation" style="font-weight:bold;font-size:17px">Deforestation
-            <div class="options">
-              Problems in the decrease in forest or trees,
-              such as wildfires, deforestation, or wildlife extinction.
-              <br>
-              Examples: "trees are being cut down at an alarming rate", "wildfire is rampant"
+            <br/>
+            <!--QUESTION 0-->
+            <div id="q0">
+                <p>Should we include this video? "No" includes non-English videos, private/deleted videos, etc.
+                    If you select No, you can go directly to Save answers and Next at the end of the page.</p>
+                <label><input type="radio" name="q0" class="radio" value="true" onclick="hideAllQuestion(false);">
+                    Yes
+                </label><br/>
+                <label><input type="radio" name="q0" class="radio" value="false" onclick="hideAllQuestion(true);">
+                    No
+                </label>
             </div>
-          </label>
-        </label><br/>
+            </br>
 
-        <label>
-          <input id="q1_inaction" type="checkbox" name="q1" class="checkbox"
-                 value="inaction">
-          <label for="q1_inaction" style="font-weight:bold;font-size:17px">Inaction
-            <div class="options">
-              Inaction or low-awareness of the government and public, or the denial of climate change.
-              <br>
-              Examples: "people are complaining but no action","the government is doing too little"
+            <!-- QUESTION 1 -->
+            <div id="q1">
+                <p>Check all the environmental problems mentioned in the video</p><br>
+
+                <label>
+                    <input id="q1_climate" type="checkbox" name="q1" class="checkbox"
+                           value="climate_change">
+                    <label for="q1_climate" style="font-weight:bold;font-size:12px">Climate change
+                        <div class="options">
+                            Problems related to the change of climate, weather, or atmosphere,
+                            such as climate change, global warming, CO2 emissions.
+                            <br>
+                            Examples: "Earth is getting hotter than ever", "too much CO2 in the air"
+                        </div>
+                    </label>
+                </label><br/>
+
+                <label>
+                    <input id="q1_deforestation" type="checkbox" name="q1" class="checkbox"
+                           value="deforestation">
+                    <label for="q1_deforestation" style="font-weight:bold;font-size:12px">Deforestation
+                        <div class="options">
+                            Problems in the decrease in forest or trees,
+                            such as wildfires, deforestation, or wildlife extinction.
+                            <br>
+                            Examples: "trees are being cut down at an alarming rate", "wildfire is rampant"
+                        </div>
+                    </label>
+                </label><br/>
+
+                <label>
+                    <input id="q1_inaction" type="checkbox" name="q1" class="checkbox"
+                           value="inaction">
+                    <label for="q1_inaction" style="font-weight:bold;font-size:12px">Inaction
+                        <div class="options">
+                            Inaction or low-awareness of the government and public, or the denial of climate change.
+                            <br>
+                            Examples: "people are complaining but no action","the government is doing too little"
+                        </div>
+                    </label>
+                </label><br/>
+
+                <label>
+                    <input id="q1_other" type="checkbox" name="q1" class="checkbox"
+                           value="other_issues">
+                    <label for="q1_other" style="font-weight:bold;font-size:12px">Other issues
+                        <div class="options">
+                            Other sustainability problems except for climate change, deforestation, and inaction,
+                            such as human waste, lack of recycling, etc.
+                            <br>
+                            Examples: "too much plastics","reduce waste"
+                        </div>
+                    </label>
+                </label><br/>
+
+                <label>
+                    <input id="q1_none" type="checkbox" name="q1" class="checkbox"
+                           value="none_apply">
+                    <label for="q1_none" style="font-weight:bold;font-size:12px">None
+                        <div class="options">
+                            None of the options is apparent or applicable.
+                        </div>
+                    </label>
+                </label><br/>
             </div>
-          </label>
-        </label><br/>
 
-        <label>
-          <input id="q1_other" type="checkbox" name="q1" class="checkbox"
-                 value="none_apply">
-          <label for="q1_other" style="font-weight:bold;font-size:17px">Other issues
-            <div class="options">
-              Other sustainability problems except for climate change, deforestation, and inaction,
-              such as human waste, lack of recycling, etc.
-              <br>
-              Examples: "too much plastics","reduce waste"
+            </br>
+            <br/>
+
+            <!-- QUESTION 2 -->
+            <div id="q2">
+                <p>Considering the main theme of the video, check ones that describe how the YouTuber take actions to
+                    participate in the campaign</p><br>
+
+                <label>
+                    <input id="q2_spread" type="checkbox" name="q2" class="checkbox"
+                           value="spread_the_word">
+                    <label for="q2_spread" style="font-weight:bold;font-size:12px"> Spread the word
+                        <div class="options">
+                            The main content of the video is introducing the #TeamTrees campaign.
+                            The video announces and advertises the #TeamTrees campaign by showing mission, activities,
+                            impact, or statistics.
+                            <br>
+                            Examples: Showing statistics, numbers, show big donors.
+                            Introduce the events, watch dogs in park to talk about TeamTrees, unboxing a TeamTrees
+                            Tshirt
+                        </div>
+                    </label>
+                </label><br/>
+
+                <label>
+                    <input id="q2_environmental_discussion" type="checkbox" name="q2" class="checkbox"
+                           value="environmental_discussion">
+                    <label for="q2_environmental_discussion" style="font-weight:bold;font-size:12px"> Environmental
+                        discussion
+                        <div class="options">
+                            The video shows or discusses problems related to the #TeamTrees campaign,
+                            including climate change, deforestation, natural disasters, etc.
+                            <br>
+                            Examples: In depth explanation on deforestation, showing stats on human waste, show images
+                            of wildfires
+                        </div>
+                    </label>
+                </label><br/>
+
+                <label>
+                    <input id="q2_shoutout" type="checkbox" name="q2" class="checkbox"
+                           value="shout-out">
+                    <label for="q2_environmental_discussion" style="font-weight:bold;font-size:12px"> Shout-out
+                        <div class="options">
+                            The video embeds the #TeamTrees information, generally short, at the beginning, middle, or
+                            end
+                            of the video as a shout-out, but the main part of the video is not relevant to the campaign.
+                            <br>
+                            Examples: Chat with audience while playing GTA, answer a bunch of random questions.
+                            One of them is his reactions to teamtrees;
+                            Doctor reacting to medical memes and give a short shout-out to TeamTrees.
+                        </div>
+                    </label>
+                </label><br/>
+
+                <label>
+                    <input id="q2_share" type="checkbox" name="q2" class="checkbox"
+                           value="share_videos">
+                    <label for="q2_share" style="font-weight:bold;font-size:12px"> Share videos
+                        <div class="options">
+                            The video is made by sharing other's #TeamTrees videos or compiling other's #TeamTrees video
+                            clips.
+                            The video may show, comment on, and/or react to the videos created by other YouTubers.
+                            <br>
+                            Examples: reacting to environmental memes, reacting to Mr. Beast videos,
+                            sharing TikTok videos of TeamTrees
+                        </div>
+                    </label>
+                </label><br/>
+
+                <label>
+                    <input id="q2_donation" type="checkbox" name="q2" class="checkbox"
+                           value="donation">
+                    <label for="q2_donation" style="font-weight:bold;font-size:12px"> Donation
+                        <div class="options">
+                            The video is about the donating activiteis to the teamtrees.org website,
+                            or various fundraising activities to show the YouTubers have donated to the #TeamTrees
+                            campaign.
+                            <br>
+                            Examples: livestreaming to fundraising for TT, play arcade games and
+                            donate $1 for every ticket won, showing donation website and donate
+                        </div>
+                    </label>
+                </label><br/>
+
+                <label>
+                    <input id="q2_plant" type="checkbox" name="q2" class="checkbox"
+                           value="plant_trees">
+                    <label for="q2_plant" style="font-weight:bold;font-size:12px"> Plant trees
+                        <div class="options">
+                            The video is about showing the method, activities, or process of
+                            planting real trees or plants at home or in the wild
+                            <br>
+                            Examples: Go to store and buy trees to plant, plant pine trees from seeds
+                        </div>
+                    </label>
+                </label><br/>
+
+                <label>
+                    <input id="q2_knowledge" type="checkbox" name="q2" class="checkbox"
+                           value="knowledge">
+                    <label for="q2_knowledge" style="font-weight:bold;font-size:12px"> Knowledge
+                        <div class="options">
+                            The video explains knowledge related to trees or environment in general.
+                            It may include the knolwedge or fun facts about trees or tree-related things
+                            (e.g. arts, laws, stories)
+                            <br>
+                            Examples: biology video explaining photosynthesis, explaining studies on plants
+                            making auditory sounds when hurt, show historical art made by trees
+                        </div>
+                    </label>
+                </label><br/>
+
+                <label>
+                    <input id="q2_gameplay" type="checkbox" name="q2" class="checkbox"
+                           value="gameplay">
+                    <label for="q2_gameplay" style="font-weight:bold;font-size:12px"> Gameplay
+                        <div class="options">
+                            The video is a live or recorded video games inspired by #TeamTrees.
+                            The video shows gaming activities such as planting virtual trees or
+                            performing #TeamTrees-related activities.
+                            <br>
+                            Examples: plant 20,000,000 trees in minecraft, tree-related video games
+                        </div>
+                    </label>
+                </label><br/>
+
+                <label>
+                    <input id="q2_creation" type="checkbox" name="q2" class="checkbox"
+                           value="creation">
+                    <label for="q2_creation" style="font-weight:bold;font-size:12px"> Creation
+                        <div class="options">
+                            The video is a live or recorded video games inspired by #TeamTrees.
+                            The video shows artistic or funny creations inspired by or related to #TeamTrees,
+                            usually through creation of arts or interesting items (e.g. tree related music,
+                            drawing, crafts, funny things, etc.)
+                            <br>
+                            Examples: photoshopping trees back into the picture, digital paintings of trees,
+                            made a song about trees
+                        </div>
+                    </label>
+                </label><br/>
+
+                <label>
+                    <input id="q2_criticism" type="checkbox" name="q2" class="checkbox"
+                           value="criticism">
+                    <label for="q2_criticism" style="font-weight:bold;font-size:12px"> Criticism
+                        <div class="options">
+                            The video is about showing criticism or negative opinions on the #TeamTrees campaign.
+                            <br>
+                            Examples: Comment on other TeamTrees video and critize that TeamTrees is not effective.
+                            Show data about climate change statistics. Explain climate change reality.
+                        </div>
+                    </label>
+                </label><br/>
+
+                <label>
+                    <input id="q2_none" type="checkbox" name="q2" class="checkbox"
+                           value="none_apply">
+                    <label for="q2_none" style="font-weight:bold;font-size:12px">None
+                        <div class="options">
+                            None of the options is apparent or applicable.
+                        </div>
+                    </label>
+                </label><br/>
             </div>
-          </label>
-        </label><br/>
 
-        <label>
-          <input id="q1_none" type="checkbox" name="q1" class="checkbox"
-                 value="none_apply">
-          <label for="q1_none" style="font-weight:bold;font-size:17px">None
-            <div class="options">
-              None of the options is apparent or applicable.
+            </br>
+            <br/>
+
+            <!-- QUESTION 3 -->
+            <div id="q3">
+                <p>Considering how the YouTuber explain their motivations to participate in the campaign or motivate the
+                    viewers to participate, check all that apply</p><br>
+
+                <label>
+                    <input id="q3_donation" type="checkbox" name="q3" class="checkbox"
+                           value="donation">
+                    <label for="q3_donation" style="font-weight:bold;font-size:12px"> Donation
+                        <div class="options">
+                            The video calls for donating to the campaign.
+                            <br>
+                            Examples: "Go donate to TT", "any little amount would help"
+                        </div>
+                    </label>
+                </label><br/>
+
+                <label>
+                    <input id="q3_environment" type="checkbox" name="q3" class="checkbox"
+                           value="environment_actions">
+                    <label for="q3_environment" style="font-weight:bold;font-size:12px"> Environment actions
+                        <div class="options">
+                            The video calls for protecting the environment and take general actions
+                            that benefits the environment.
+                            <br>
+                            Examples: "make earth a better place", "recycle, clean up streams"
+                        </div>
+                    </label>
+                </label><br/>
+
+                <label>
+                    <input id="q3_join" type="checkbox" name="q3" class="checkbox"
+                           value="join_activities">
+                    <label for="q3_join" style="font-weight:bold;font-size:12px"> Join activities
+                        <div class="options">
+                            The video calls for participating in the activities performed in the video,
+                            such as joining in the game or the fundraising activities of the YouTuber.
+                            <br>
+                            Examples: Join the server to plant trees together, Buy my art to help me donate
+                        </div>
+                    </label>
+                </label><br/>
+
+                <label>
+                    <input id="q3_moretrees" type="checkbox" name="q3" class="checkbox"
+                           value="more_trees">
+                    <label for="q3_moretrees" style="font-weight:bold;font-size:12px"> More trees
+                        <div class="options">
+                            The video calls for planting more trees.
+                            <br>
+                            Examples: "Plant you own trees", "Gotta support building trees"
+                        </div>
+                    </label>
+                </label><br/>
+
+                <label>
+                    <input id="q3_treebenefits" type="checkbox" name="q3" class="checkbox"
+                           value="tree_benefits">
+                    <label for="q3_treebenefits" style="font-weight:bold;font-size:12px"> Tree benefits
+                        <div class="options">
+                            The video gives the rationale for planting more trees, usually by
+                            explaining the benefits of trees to the environment.
+                            <br>
+                            Examples: "We need more trees, we need more oxygen", "you can make a change by planting
+                            trees",
+                            "trees are great for our planet"
+                        </div>
+                    </label>
+                </label><br/>
+
+                <label>
+                    <input id="q3_celebrity" type="checkbox" name="q3" class="checkbox"
+                           value="celebrity_effect">
+                    <label for="q3_celebrity" style="font-weight:bold;font-size:12px"> Celebrity effect
+                        <div class="options">
+                            The video mentions celebrities' (e.g. MrBeast, Elon Musk) involvement in #TeamTrees to
+                            explain
+                            the reason why the YouTuber is participating in the campaign.
+                            <br>
+                            Examples: "Help Mr. Beast achieve his goal", "Make Elon Musk proud"
+                        </div>
+                    </label>
+                </label><br/>
+
+                <label>
+                    <input id="q3_community" type="checkbox" name="q3" class="checkbox"
+                           value="community_effect">
+                    <label for="q3_community" style="font-weight:bold;font-size:12px"> Community effect
+                        <div class="options">
+                            The video mentions community's collaboration or actions as the reason why the YouTuber is
+                            participating, such as asking the viewers to watch other #TeamTrees video from other
+                            non-celebrity YouTubers.
+                            <br>
+                            Examples: "Check out, like, and share other TT videos", "join the biggest youtube collab",
+                            "make a positive change together", "if you can't donate, like and share"
+                        </div>
+                    </label>
+                </label><br/>
+
+                <label>
+                    <input id="q3_none" type="checkbox" name="q3" class="checkbox"
+                           value="none_apply">
+                    <label for="q3_none" style="font-weight:bold;font-size:12px">None
+                        <div class="options">
+                            None of the options is apparent or applicable.
+                        </div>
+                    </label>
+                </label><br/>
             </div>
-          </label>
-        </label><br/>
-      </div>
 
-      </br>
-      <br/>
-
-      <!-- QUESTION 2 -->
-      <div id="q2">
-        <htitle>What does this video try to do? If the video has a MAIN theme,
-          please only check the main theme. If there are multiple main themes, check all that apply.</htitle><br>
-
-        <label>
-          <input id="q2_spread" type="checkbox" name="q2" class="checkbox"
-                 value="spread the word">
-          <label for="q2_spread" style="font-weight:bold;font-size:17px"> Spread the word
-            <div class="options">
-              The main content of the video is introducing the #TeamTrees campaign.
-              The video announces and advertises the #TeamTrees campaign by showing mission, activities, impact, or statistics.
-              <br>
-              Examples: Showing statistics, numbers, show big donors.
-              Introduce the events, watch dogs in park to talk about TeamTrees, unboxing a TeamTrees Tshirt
-            </div>
-          </label>
-        </label><br/>
-
-        <label>
-          <input id="q2_environmental_discussion" type="checkbox" name="q2" class="checkbox"
-                 value="environmental discussion">
-          <label for="q2_environmental_discussion" style="font-weight:bold;font-size:17px"> Environmental discussion
-            <div class="options">
-              The video shows or discusses problems related to the #TeamTrees campaign,
-              including climate change, deforestation, natural disasters, etc.
-              <br>
-              Examples: In depth explanation on deforestation, showing stats on human waste, show images of wildfires
-            </div>
-          </label>
-        </label><br/>
-
-        <label>
-          <input id="q2_shoutout" type="checkbox" name="q2" class="checkbox"
-                 value="shout-out">
-          <label for="q2_environmental_discussion" style="font-weight:bold;font-size:17px"> Shout-out
-            <div class="options">
-              The video embeds the #TeamTrees information, generally short, at the beginning, middle, or end
-              of the video as a shout-out, but the main part of the video is not relevant to the campaign.
-              <br>
-              Examples: Chat with audience while playing GTA, answer a bunch of random questions.
-                          One of them is his reactions to teamtrees;
-                        Doctor reacting to medical memes and give a short shout-out to TeamTrees.
-            </div>
-          </label>
-        </label><br/>
-
-        <label>
-          <input id="q2_share" type="checkbox" name="q2" class="checkbox"
-                 value="share videos">
-          <label for="q2_share" style="font-weight:bold;font-size:17px"> Share videos
-            <div class="options">
-              The video is made by sharing other's #TeamTrees videos or compiling other's #TeamTrees video clips.
-              The video may show, comment on, and/or react to the videos created by other YouTubers.
-              <br>
-              Examples: reacting to environmental memes, reacting to Mr. Beast videos,
-              sharing TikTok videos of TeamTrees
-            </div>
-          </label>
-        </label><br/>
-
-        <label>
-          <input id="q2_donation" type="checkbox" name="q2" class="checkbox"
-                 value="donation">
-          <label for="q2_donation" style="font-weight:bold;font-size:17px"> Donation
-            <div class="options">
-              The video is about the donating activiteis to the teamtrees.org website,
-              or various fundraising activities to show the YouTubers have donated to the #TeamTrees
-              campaign.
-              <br>
-              Examples: livestreaming to fundraising for TT, play arcade games and
-              donate $1 for every ticket won, showing donation website and donate
-            </div>
-          </label>
-        </label><br/>
-
-        <label>
-          <input id="q2_plant" type="checkbox" name="q2" class="checkbox"
-                 value="plant trees">
-          <label for="q2_plant" style="font-weight:bold;font-size:17px"> Plant trees
-            <div class="options">
-              The video is about showing the method, activities, or process of
-              planting real trees or plants at home or in the wild
-              <br>
-              Examples: Go to store and buy trees to plant, plant pine trees from seeds
-            </div>
-          </label>
-        </label><br/>
-
-        <label>
-          <input id="q2_knowledge" type="checkbox" name="q2" class="checkbox"
-                 value="knowledge">
-          <label for="q2_knowledge" style="font-weight:bold;font-size:17px"> Knowledge
-            <div class="options">
-              The video explains knowledge related to trees or environment in general.
-              It may include the knolwedge or fun facts about trees or tree-related things
-              (e.g. arts, laws, stories)
-              <br>
-              Examples: biology video explaining photosynthesis, explaining studies on plants
-              making auditory  sounds when hurt, show historical art made by trees
-            </div>
-          </label>
-        </label><br/>
-
-        <label>
-          <input id="q2_gameplay" type="checkbox" name="q2" class="checkbox"
-                 value="gameplay">
-          <label for="q2_gameplay" style="font-weight:bold;font-size:17px"> Gameplay
-            <div class="options">
-              The video is a live or recorded video games inspired by #TeamTrees.
-              The video shows gaming activities such as planting virtual trees or
-              performing #TeamTrees-related activities.
-              <br>
-              Examples: plant 20,000,000 trees in minecraft, tree-related video games
-            </div>
-          </label>
-        </label><br/>
-
-        <label>
-          <input id="q2_creation" type="checkbox" name="q2" class="checkbox"
-                 value="creation">
-          <label for="q2_creation" style="font-weight:bold;font-size:17px"> Creation
-            <div class="options">
-              The video is a live or recorded video games inspired by #TeamTrees.
-              The video shows artistic or funny creations inspired by or related to #TeamTrees,
-              usually through creation of arts or interesting items (e.g. tree related music,
-              drawing, crafts, funny things, etc.)
-              <br>
-              Examples: photoshopping trees back into the picture, digital paintings of trees,
-              made a song about trees
-            </div>
-          </label>
-        </label><br/>
-
-        <label>
-          <input id="q2_criticism" type="checkbox" name="q2" class="checkbox"
-                 value="criticism">
-          <label for="q2_criticism" style="font-weight:bold;font-size:17px"> Criticism
-            <div class="options">
-              The video is about showing criticism or negative opinions on the #TeamTrees campaign.
-              <br>
-              Examples: Comment on other TeamTrees video and critize that TeamTrees is not effective.
-              Show data about climate change statistics. Explain climate change reality.
-            </div>
-          </label>
-        </label><br/>
-
-        <label>
-          <input id="q2_none" type="checkbox" name="q2" class="checkbox"
-                 value="none_apply">
-          <label for="q2_none" style="font-weight:bold;font-size:17px">None
-            <div class="options">
-              None of the options is apparent or applicable.
-            </div>
-          </label>
-        </label><br/>
-      </div>
-
-      </br>
-      <br/>
-
-      <!-- QUESTION 3 -->
-      <div id="q3">
-        <htitle>What/How does the video motivate viewers to participate? Check all that apply.</htitle><br>
-
-        <label>
-          <input id="q3_donation" type="checkbox" name="q3" class="checkbox"
-                 value="donation">
-          <label for="q3_donation" style="font-weight:bold;font-size:17px"> Donation
-            <div class="options">
-              The video calls for donating to the campaign.
-              <br>
-              Examples: "Go donate to TT", "any little amount would help"
-            </div>
-          </label>
-        </label><br/>
-
-        <label>
-          <input id="q3_environment" type="checkbox" name="q3" class="checkbox"
-                 value="environment actions">
-          <label for="q3_environment" style="font-weight:bold;font-size:17px"> Environment actions
-            <div class="options">
-              The video calls for protecting the environment and take general actions
-              that benefits the environment.
-              <br>
-              Examples: "make earth a better place", "recycle, clean up streams"
-            </div>
-          </label>
-        </label><br/>
-
-        <label>
-          <input id="q3_join" type="checkbox" name="q3" class="checkbox"
-                 value="join activities">
-          <label for="q3_join" style="font-weight:bold;font-size:17px"> Join activities
-            <div class="options">
-              The video calls for participating in the activities performed in the video,
-              such as joining in the game or the fundraising activities of the YouTuber.
-              <br>
-              Examples: Join the server to plant trees together, Buy my art to help me donate
-            </div>
-          </label>
-        </label><br/>
-
-        <label>
-          <input id="q3_moretrees" type="checkbox" name="q3" class="checkbox"
-                 value="more trees">
-          <label for="q3_moretrees" style="font-weight:bold;font-size:17px"> More trees
-            <div class="options">
-              The video calls for planting more trees.
-              <br>
-              Examples: "Plant you own trees", "Gotta support building trees"
-            </div>
-          </label>
-        </label><br/>
-
-        <label>
-          <input id="q3_treebenefits" type="checkbox" name="q3" class="checkbox"
-                 value="tree benefits">
-          <label for="q3_treebenefits" style="font-weight:bold;font-size:17px"> Tree benefits
-            <div class="options">
-              The video gives the rationale for planting more trees, usually by
-              explaining the benefits of trees to the environment.
-              <br>
-              Examples: "We need more trees, we need more oxygen", "you can make a change by planting trees",
-              "trees are great for our planet"
-            </div>
-          </label>
-        </label><br/>
-
-        <label>
-          <input id="q3_celebrity" type="checkbox" name="q3" class="checkbox"
-                 value="celebrity effect">
-          <label for="q3_celebrity" style="font-weight:bold;font-size:17px"> Celebrity effect
-            <div class="options">
-              The video mentions celebrities' (e.g. MrBeast, Elon Musk) involvement in #TeamTrees to explain
-              the reason why the YouTuber is participating in the campaign.
-              <br>
-              Examples: "Help Mr. Beast achieve his goal", "Make Elon Musk proud"
-            </div>
-          </label>
-        </label><br/>
-
-        <label>
-          <input id="q3_community" type="checkbox" name="q3" class="checkbox"
-                 value="community effect">
-          <label for="q3_community" style="font-weight:bold;font-size:17px"> Community effect
-            <div class="options">
-              The video mentions community's collaboration or actions as the reason why the YouTuber is
-              participating, such as asking the viewers to watch other #TeamTrees video from other
-              non-celebrity YouTubers.
-              <br>
-              Examples: "Check out, like, and share other TT videos", "join the biggest youtube collab",
-              "make a positive change together", "if you can't donate, like and share"
-            </div>
-          </label>
-        </label><br/>
-
-        <label>
-          <input id="q3_none" type="checkbox" name="q3" class="checkbox"
-                 value="none_apply">
-          <label for="q3_none" style="font-weight:bold;font-size:17px">None
-            <div class="options">
-              None of the options is apparent or applicable.
-            </div>
-          </label>
-        </label><br/>
-      </div>
-
-    </form>
-  </div>
-  <br/><br/>
-  <button type="submit" id="submit" onclick="isCompleted()">Save answers & Next</button>
-  <button type="download" id="download" onclick='downloadCSV({ filename: "progress.csv" });'>Finish & Download</button>
-  <label for="totalVideosTagged" style="font-style: italic">Total videos tagged: </label>
-  <text id="totalVideosTagged" style="font-size:20px"></text>
+        </form>
+    </div>
+    <br/><br/>
+    <button type="submit" id="submit" onclick="isCompleted()">Save answers & Next</button>
+    <button type="download" id="download" onclick='downloadCSV({ filename: "progress.csv" });'>Finish & Download
+    </button>
+    <label for="totalVideosTagged" style="font-style: italic">Total videos tagged: </label>
+    <text id="totalVideosTagged" style="font-size:20px"></text>
 </div>
 
 
 <script type="application/javascript">
-  let url_list = [];
-  let currentIndex = 0;
-  let answers = [];
-  let totalTagged = 0;
-  let continuing = false;
-  let NUMBER_OF_QUESTIONS  = 4;
-  let FINAL_HEADER = ["isIncluded", "diagnostic", "prognostic", "motivational"];
-  let hasUploadedVideoFile = false;
-  let VIDEO_FILE;
+    let url_list = [];
+    let currentIndex = 0;
+    let answers = [];
+    let totalTagged = 0;
+    let continuing = false;
+    let NUMBER_OF_QUESTIONS = 4;
+    let FINAL_HEADER = ["isIncluded", "diagnostic", "prognostic", "motivational"];
+    let hasUploadedVideoFile = false;
+    let VIDEO_FILE;
+    let NUMBER_OF_VIDEOS_IN_FILE = 0;
 
-  document.getElementById('uploadTaggedFile').addEventListener('change',loadTaggedFile);
-  document.getElementById('uploadVideoFile').addEventListener('change', loadVideoFile);
+    document.getElementById('uploadTaggedFile').addEventListener('change', loadTaggedFile);
+    // document.getElementById('uploadVideoFile').addEventListener('change', loadVideoFile);
 
-  clearAnswers();
-
-  // hide or show image
-  function hideImage(img) {
-    let x = document.getElementById(img);
-    if (x.style.display === "block") {
-      x.style.display = "none_apply";
-    } else {
-      x.style.display = "block";
-    }
-  }
-
-  // LOAD TAGGED FILE
-  function loadTaggedFile(evt) {
-    let file = evt.target.files[0];
-    if (file) {
-      continuing = true;
-      let reader = new FileReader();
-      reader.onloadend = function (evt) {
-        let dataUrl = evt.target.result;
-        console.log(dataUrl)
-        // The following call results in an "Access denied" error in IE.
-        storeTaggedVid(dataUrl);
-      }
-      reader.readAsDataURL(file);
-    }
-  }
-
-  // STORE TAGGED VIDEO DATA
-  let storeTaggedVid = function (csvUrl) { // argument = csv file
-    d3.csv(csvUrl, function (rows) {
-      rows.forEach(function (d) { // for each row in the csv
-        answers.push({
-          "embedUrl": d["embedUrl"],
-          "videoId": d["videoId"],
-          "isIncluded" : d["isIncluded"],
-          "diagnostic":d["diagnostic"],
-          "prognostic":d["prognostic"],
-          "motivational":d["motivational"]
-        });
-        totalTagged++;
-      })
-    })
-    // Refresh video embed based on new progress file
-    if (hasUploadedVideoFile)
-      loadVideoFileFromFile(VIDEO_FILE);
-  }
-
-  // LOAD VIDEO FILE FROM EVENT
-  function loadVideoFile(evt) {
-    url_list = [];
-    currentIndex = 0;
-    let file = evt.target.files[0];
-    if (file){
-      hasUploadedVideoFile = true;
-      VIDEO_FILE = file;
-      loadVideoFileFromFile(file);
-    }
     clearAnswers();
-  }
 
-  // LOAD VIDEO FILE FROM ACTUAL FILE
-  function loadVideoFileFromFile(file){
-    url_list = [];
-    currentIndex = 0;
-    if (file) {
-      let reader = new FileReader();
-      reader.onloadend = function (evt) {
-        let dataUrl = evt.target.result;
-        // The following call results in an "Access denied" error in IE.
-        previewCsvUrl(dataUrl);
-      }
-      reader.readAsDataURL(file);
-    }
-  }
-
-  let previewCsvUrl = function (csvUrl) { // argument = csv Url
-    d3.csv(csvUrl, function (rows) {
-      rows.forEach(function (d) { // for each row in the csv
-        let tagged = isTagged(d["embedUrl"]); //check to see if vid has been tagged
-        if(!tagged){
-          url_list.push({
-            "embedUrl": d["embedUrl"],
-            "videoId": d["videoId"],
-            "viewCount":d["viewCount"],
-            "title": d["title"],
-          });
+    // hide and show
+    function hideAllQuestion(toHide) {
+      if (toHide) {
+        for (i = 1; i < NUMBER_OF_QUESTIONS; i++) {
+          let temp = document.getElementById('q' + (i).toString());
+          temp.style.display = "none";
         }
-      });
-      updateVideoUrl(currentIndex);
-      clearAnswers();
-    });
-  };
-
-  function isTagged(url) {
-    list = answers
-    let tagged = false;
-    if(continuing) {
-      for (let i = 0, l = list.length; i < l; i++) {
-        if (list[i]["embedUrl"] === url) {
-          tagged = true;
-          break;
+      }
+      if (!toHide) {
+        for (i = 1; i < NUMBER_OF_QUESTIONS; i++) {
+          let temp = document.getElementById('q' + (i).toString());
+          temp.style.display = "block";
         }
       }
     }
-    return tagged;
-  }
 
-  function updateVideoUrl(index) {
-    if (index < url_list.length) {
-      document.getElementById("videoframe").setAttribute("src", url_list[index]["embedUrl"]);
-      document.getElementById("link").href=url_list[index]["embedUrl"];
-      document.getElementById("title").innerText = url_list[index]["title"];
-      document.getElementById("viewCount").innerText = parseInt(url_list[index]["viewCount"]).toString();
-    } else {
-      downloadCSV({filename: "progress.csv"});
-    }
-    document.getElementById("totalVideosTagged").innerText = totalTagged.toString();
-  }
-
-  function clearAnswers() {
-    let choices = document.getElementsByClassName('checkbox');
-    for (var i = 0; i < choices.length; i++)
-      choices[i].checked = false;
-
-    let radio_choices = document.getElementsByClassName("radio");
-    for (i = 0; i < radio_choices.length; i++)
-      radio_choices[i].checked = false;
-
-  }
-
-  // Check that all questions have been answered
-  // If question 0 (include?) is "No," user can click save and next
-  function isCompleted() {
-    let completed = true;
-    let answer_list = [];
-
-    let include_question = document.getElementsByName("q0");
-    let hasCheckedInclude = false;
-    for (i=0; i<include_question.length; i++){
-      if (include_question[i].checked)
-        hasCheckedInclude = true;
-    }
-    console.log(hasCheckedInclude);
-    let isIncluded = include_question[0].checked; //THE POSITION OF "YES" IN QUESTION 0
-
-    if (isIncluded){
-      for(i = 0; i < NUMBER_OF_QUESTIONS; i++) {
-        let answered = false;
-        let choices = document.getElementsByName('q' + (i).toString());
-        for (j = 0; j < choices.length; j++) {
-          let c = choices[j]
-          if (c.checked)
-            answered = true;
+    // LOAD TAGGED FILE
+    function loadTaggedFile(evt) {
+        let file = evt.target.files[0];
+        if (file){
+            VIDEO_FILE = file;
+            continuing = true;
+            let reader = new FileReader();
+            reader.onloadend = function (evt) {
+                let dataUrl = evt.target.result;
+                // The following call results in an "Access denied" error in IE.
+                storeTaggedVid(dataUrl);
+            }
+            reader.readAsDataURL(file);
         }
-        answer_list.push(answered);
-      }
-      for (k = 0; k < answer_list.length; k++){
-        if (!answer_list[k])
-          completed = false;
-      }
+      loadVideoFileFromFile(VIDEO_FILE);
     }
-    if (!isIncluded) // video is not included
-      completed = true;
 
-    if(completed && hasCheckedInclude){
-      saveAnswers();
+    // STORE TAGGED VIDEO DATA
+    let storeTaggedVid = function (csvUrl) { // argument = csv file
+        d3.csv(csvUrl, function (rows) {
+            rows.forEach(function (d) { // for each row in the csv
+                let tagged = isTaggedRow(d);
+                if (tagged) {
+                  answers.push({
+                    "embedUrl": d["embedUrl"],
+                    "videoId": d["videoId"],
+                    "isIncluded": d["isIncluded"],
+                    "diagnostic": d["diagnostic"],
+                    "prognostic": d["prognostic"],
+                    "motivational": d["motivational"]
+                  });
+                  totalTagged++;
+                  console.log(totalTagged);
+                }
+            })
+        })
+        // Refresh video embed based on new progress file
     }
-    else if (!completed || !hasCheckedInclude){
-      window.alert("Not all questions have been answered.");
-    }
-  }
 
+    // LOAD VIDEO FILE FROM EVENT
+    // function loadVideoFile(evt) {
+    //     url_list = [];
+    //     currentIndex = 0;
+    //     let file = evt.target.files[0];
+    //     if (file) {
+    //         hasUploadedVideoFile = true;
+    //         VIDEO_FILE = file;
+    //         loadVideoFileFromFile(file);
+    //     }
+    //     clearAnswers();
+    // }
 
-  // function to calculate the result of the survey
-  // AND SAVE THEM IN A GLOBAL VARIABLE CALLED answers
-  function saveAnswers() {
-    let vid = url_list[currentIndex]["videoId"];
-    if (vid == "#NAME?"){
-      vid = url_list[currentIndex]["embedUrl"].split("https://www.youtube.com/embed/").pop();
+    // LOAD VIDEO FILE FROM ACTUAL FILE
+    function loadVideoFileFromFile(file) {
+        NUMBER_OF_VIDEOS_IN_FILE = 0;
+        url_list = [];
+        currentIndex = 0;
+        if (file) {
+            let reader = new FileReader();
+            reader.onloadend = function (evt) {
+                let dataUrl = evt.target.result;
+                // The following call results in an "Access denied" error in IE.
+                previewCsvUrl(dataUrl);
+            }
+            reader.readAsDataURL(file);
+        }
     }
-    tagging = {
-      "embedUrl": url_list[currentIndex]["embedUrl"],
-      "videoId": vid,
+
+    let previewCsvUrl = function (csvUrl) { // argument = csv Url
+        d3.csv(csvUrl, function (rows) {
+            rows.forEach(function (d) { // for each row in the csv
+                NUMBER_OF_VIDEOS_IN_FILE++;
+                let tagged = isTaggedRow(d); //check to see if vid has been tagged
+                if (!tagged) {
+                    url_list.push({
+                        "embedUrl": d["embedUrl"],
+                        "videoId": d["videoId"],
+                        // "viewCount": d["viewCount"]
+                        // "title": d["title"],
+                    });
+                }
+            });
+            updateVideoUrl(currentIndex);
+            clearAnswers();
+        });
     };
 
-    // FOR FIRST QUESTION (YES/NO)
-    let choices = document.getElementsByName("q0");
-    for (j = 0; j < choices.length; j++) {
-      if (choices[j].checked) {
-        tagging[FINAL_HEADER[0]] = choices[j].value;
+    function isTagged(url) {
+        list = answers
+        let tagged = false;
+        for (let i = 0, l = list.length; i < l; i++) {
+            if (list[i]["embedUrl"] === url) {
+                tagged = true;
+                break;
+            }
+        }
+        return tagged;
+    }
+
+    function isTaggedRow(row){
+        if (row["isIncluded"] == "" || row["diagnostic"] == ""
+          || row["prognostic"] == "" || row["motivational"] == ""){
+          return false;
       }
+        return true;
     }
 
-    // FOR THE REST OF QUESTIONS 1-3 (Multiple choice)
-    for (i=1; i<NUMBER_OF_QUESTIONS; i++){
-      let choices = document.getElementsByName("q" + (i).toString());
-      let answers_local = [];
-      for (k=0; k<choices.length; k++){
-        if (choices[k].checked)
-          answers_local.push(choices[k].value);
+    function updateVideoUrl(index) {
+        if (index < url_list.length) {
+            document.getElementById("videoframe").setAttribute("src", url_list[index]["embedUrl"]);
+            // document.getElementById("link").href = url_list[index]["embedUrl"];
+            // document.getElementById("title").innerText = url_list[index]["title"];
+            // document.getElementById("viewCount").innerText = parseInt(url_list[index]["viewCount"]).toString();
+        } else {
+            downloadCSV({filename: "progress.csv"});
+        }
+        document.getElementById("totalVideosTagged").innerText =
+          totalTagged.toString() + "/" + NUMBER_OF_VIDEOS_IN_FILE.toString();
+    }
+
+    function clearAnswers() {
+        let choices = document.getElementsByClassName('checkbox');
+        for (var i = 0; i < choices.length; i++)
+            choices[i].checked = false;
+
+        let radio_choices = document.getElementsByClassName("radio");
+        for (i = 0; i < radio_choices.length; i++)
+            radio_choices[i].checked = false;
+        hideAllQuestion(false);
+    }
+
+    // Check that all questions have been answered
+    // If question 0 (include?) is "No," user can click save and next
+    function isCompleted() {
+        let completed = true;
+        let answer_list = [];
+
+        let include_question = document.getElementsByName("q0");
+        let hasCheckedInclude = false;
+        for (i = 0; i < include_question.length; i++) {
+            if (include_question[i].checked)
+                hasCheckedInclude = true;
+        }
+        console.log(hasCheckedInclude);
+        let isIncluded = include_question[0].checked; //THE POSITION OF "YES" IN QUESTION 0
+
+        if (isIncluded) {
+            for (i = 0; i < NUMBER_OF_QUESTIONS; i++) {
+                let answered = false;
+                let choices = document.getElementsByName('q' + (i).toString());
+                for (j = 0; j < choices.length; j++) {
+                    let c = choices[j]
+                    if (c.checked)
+                        answered = true;
+                }
+                answer_list.push(answered);
+            }
+            for (k = 0; k < answer_list.length; k++) {
+                if (!answer_list[k])
+                    completed = false;
+            }
+        }
+        if (!isIncluded) // video is not included
+            completed = true;
+
+        if (completed && hasCheckedInclude) {
+            saveAnswers();
+        } else if (!completed || !hasCheckedInclude) {
+            window.alert("Not all questions have been answered.");
+        }
+    }
+
+
+    // function to calculate the result of the survey
+    // AND SAVE THEM IN A GLOBAL VARIABLE CALLED answers
+    function saveAnswers() {
+        let vid = url_list[currentIndex]["videoId"];
+        if (vid == "#NAME?") {
+            vid = url_list[currentIndex]["embedUrl"].split("https://www.youtube.com/embed/").pop();
+        }
+        tagging = {
+            "embedUrl": url_list[currentIndex]["embedUrl"],
+            "videoId": vid,
+        };
+
+        // FOR FIRST QUESTION (YES/NO)
+        let choices = document.getElementsByName("q0");
+        for (j = 0; j < choices.length; j++) {
+            if (choices[j].checked) {
+                tagging[FINAL_HEADER[0]] = choices[j].value;
+            }
+        }
+        if (choices[1].checked)
+          clearAnswers();
+
+        // FOR THE REST OF QUESTIONS 1-3 (Multiple choice)
+        for (i = 1; i < NUMBER_OF_QUESTIONS; i++) {
+            let choices = document.getElementsByName("q" + (i).toString());
+            let answers_local = [];
+            for (k = 0; k < choices.length; k++) {
+                if (choices[k].checked)
+                    answers_local.push(choices[k].value);
+            }
+            tagging[FINAL_HEADER[i]] = "[" + answers_local.join(';') + "]";
+        }
+
+        answers.push(tagging);
+        clearAnswers();
+        currentIndex++;
+        totalTagged++;
+        updateVideoUrl(currentIndex);
+        window.scrollTo(0, 0);
+    }
+
+    // add the remaining untagged links to the progress.csv file when user clicks Finish and Download
+    function repopulateCSV(){
+      let answersToSave = answers;
+      console.log(url_list);
+      for (i=0; i<url_list.length; i++){
+          let item = url_list[i];
+          if (!isTagged(item["embedUrl"])){
+            answersToSave.push({
+              "embedUrl": item["embedUrl"],
+              "videoId": item["videoId"],
+              "isIncluded": "",
+              "diagnostic": "",
+              "prognostic": "",
+              "motivational": ""
+            });
+          }
       }
-      tagging[FINAL_HEADER[i]] = "[" + answers_local.join(';') + "]";
+      return answersToSave;
     }
 
-    answers.push(tagging);
-    clearAnswers();
-    currentIndex++; totalTagged++;
-    updateVideoUrl(currentIndex);
-  }
 
-  function downloadCSV(args) {
-    var data, filename, link;
-    var csv = convertArrayOfObjectsToCSV({
-      data: answers
-    });
-    if (csv == null) return;
+    function downloadCSV(args) {
+        answersToSave = repopulateCSV();
+        var data, filename, link;
+        var csv = convertArrayOfObjectsToCSV({
+            data: answersToSave
+        });
+        console.log(answers);
+        if (csv == null) return;
 
-    filename = args.filename || 'export.csv';
+        filename = args.filename || 'export.csv';
 
-    if (!csv.match(/^data:text\/csv/i)) {
-      csv = 'data:text/csv;charset=utf-8,' + csv;
-    }
-    data = encodeURI(csv);
+        if (!csv.match(/^data:text\/csv/i)) {
+            csv = 'data:text/csv;charset=utf-8,' + csv;
+        }
+        data = encodeURI(csv);
 
-    link = document.createElement('a');
-    link.setAttribute('href', data);
-    link.setAttribute('download', filename);
-    link.click();
-  }
-
-  function convertArrayOfObjectsToCSV(args) {
-    var result, ctr, keys, columnDelimiter, lineDelimiter, data;
-
-    data = args.data || null;
-    if (data == null || !data.length) {
-      return null;
+        link = document.createElement('a');
+        link.setAttribute('href', data);
+        link.setAttribute('download', filename);
+        link.click();
     }
 
-    columnDelimiter = args.columnDelimiter || ',';
-    lineDelimiter = args.lineDelimiter || '\n';
+    function convertArrayOfObjectsToCSV(args) {
+        var result, ctr, keys, columnDelimiter, lineDelimiter, data;
 
-    keys = Object.keys(data[0]);
+        data = args.data || null;
+        if (data == null || !data.length) {
+            return null;
+        }
 
-    result = '';
-    result += keys.join(columnDelimiter);
-    result += lineDelimiter;
+        columnDelimiter = args.columnDelimiter || ',';
+        lineDelimiter = args.lineDelimiter || '\n';
 
-    data.forEach(function (item) {
-      ctr = 0;
-      keys.forEach(function (key) {
-        if (ctr > 0) result += columnDelimiter;
+        keys = Object.keys(data[0]);
 
-        result += item[key];
-        ctr++;
-      });
-      result += lineDelimiter;
-    });
+        result = '';
+        result += keys.join(columnDelimiter);
+        result += lineDelimiter;
 
-    return result;
-  }
+        data.forEach(function (item) {
+            ctr = 0;
+            keys.forEach(function (key) {
+                if (ctr > 0) result += columnDelimiter;
+
+                result += item[key];
+                ctr++;
+            });
+            result += lineDelimiter;
+        });
+
+        return result;
+    }
 </script>
 </body>
 </html>

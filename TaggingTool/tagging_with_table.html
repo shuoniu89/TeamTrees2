@@ -112,7 +112,7 @@
         <label><input type="radio" name="q0"  class="radio" value="true">
           Yes
         </label><br/>
-        <label><input type="radio" name="q0"  class="radio" value="false">
+        <label><input type="radio" name="q0"  class="radio" value="false" onclick="hideQuestion('q1');">
           No
         </label>
       </div>
@@ -257,12 +257,20 @@
   function hideImage(img) {
     let x = document.getElementById(img);
     if (x.style.display === "block") {
-      x.style.display = "none_apply";
+      x.style.display = "none";
     } else {
       x.style.display = "block";
     }
   }
 
+  function hideQuestion(question_id) {
+    let x = document.getElementById(question_id);
+    if (x.style.display === "block") {
+      x.style.display = "none";
+    } else {
+      x.style.display = "block";
+    }
+  }
   // LOAD TAGGED FILE
   function loadTaggedFile(evt) {
     let file = evt.target.files[0];
