@@ -271,9 +271,9 @@
                             end
                             of the video as a shout-out, but the main part of the video is not relevant to the campaign.
                             <br>
-                            Examples: Chat with audience while playing GTA, answer a bunch of random questions.
-                            One of them is his reactions to teamtrees;
-                            Doctor reacting to medical memes and give a short shout-out to TeamTrees.
+                            Examples: CA video of playing GTA while mentioning TeamTrees at the end.
+                            Reacting to funny (non-TeamTrees) memes but give a short shout-out to TeamTrees
+                            at the beginning. A non-TeamTrees related music but mentions TeamTrees at the end.
                         </div>
                     </label>
                 </label><br/>
@@ -298,7 +298,7 @@
                            value="donation">
                     <label for="q2_donation" style="font-weight:bold;font-size:12px"> Donation
                         <div class="options">
-                            The video is about the donating activiteis to the teamtrees.org website,
+                            The video is about the donating activities to the teamtrees.org website,
                             or various fundraising activities to show the YouTubers have donated to the #TeamTrees
                             campaign.
                             <br>
@@ -327,7 +327,7 @@
                     <label for="q2_knowledge" style="font-weight:bold;font-size:12px"> Knowledge
                         <div class="options">
                             The video explains knowledge related to trees or environment in general.
-                            It may include the knolwedge or fun facts about trees or tree-related things
+                            It may include the knowledge or fun facts about trees or tree-related things
                             (e.g. arts, laws, stories)
                             <br>
                             Examples: biology video explaining photosynthesis, explaining studies on plants
@@ -355,7 +355,6 @@
                            value="creation">
                     <label for="q2_creation" style="font-weight:bold;font-size:12px"> Creation
                         <div class="options">
-                            The video is a live or recorded video games inspired by #TeamTrees.
                             The video shows artistic or funny creations inspired by or related to #TeamTrees,
                             usually through creation of arts or interesting items (e.g. tree related music,
                             drawing, crafts, funny things, etc.)
@@ -373,7 +372,7 @@
                         <div class="options">
                             The video is about showing criticism or negative opinions on the #TeamTrees campaign.
                             <br>
-                            Examples: Comment on other TeamTrees video and critize that TeamTrees is not effective.
+                            Examples: Comment on other TeamTrees video and criticize that TeamTrees is not effective.
                             Show data about climate change statistics. Explain climate change reality.
                         </div>
                     </label>
@@ -443,7 +442,7 @@
                         <div class="options">
                             The video calls for planting more trees.
                             <br>
-                            Examples: "Plant you own trees", "Gotta support building trees"
+                            Examples: "Plant your own trees", "Gotta support building trees"
                         </div>
                     </label>
                 </label><br/>
@@ -528,9 +527,7 @@
     document.getElementById('uploadTaggedFile').addEventListener('change', loadTaggedFile);
     document.getElementById('uploadTaggedFile').onclick = function () {
       this.value = null;
-    };
-
-    // document.getElementById('uploadVideoFile').addEventListener('change', loadVideoFile);
+    }
 
     clearAnswers();
 
@@ -727,8 +724,6 @@
             }
             tagging[FINAL_HEADER[i]] = "[" + answers_local.join(';') + "]";
         }
-        console.log("ASNWER AT SAVE PRE: ");
-        console.log(answers);
         answers.push(tagging);
         setTagged(vid);
         totalTagged++; currentIndex++;
