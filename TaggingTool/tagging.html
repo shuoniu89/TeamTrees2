@@ -528,26 +528,17 @@
     document.getElementById('uploadTaggedFile').onclick = function () {
       this.value = null;
     }
-
-    clearAnswers();
-
-    // hide and show
+    // hide and show questions when video is not included
     function hideAllQuestion(toHide) {
-      if (toHide) {
-        for (i = 1; i < NUMBER_OF_QUESTIONS; i++) {
-          let temp = document.getElementById('q' + (i).toString());
-          temp.style.display = "none";
-        }
-      }
-      if (!toHide) {
-        for (i = 1; i < NUMBER_OF_QUESTIONS; i++) {
-          let temp = document.getElementById('q' + (i).toString());
-          temp.style.display = "block";
-        }
+      let style = toHide ? "none" : "block";
+
+      for (i = 1; i < NUMBER_OF_QUESTIONS; i++) {
+        let temp = document.getElementById('q' + (i).toString());
+        temp.style.display = style;
       }
     }
 
-    function resetStoredData(){
+    function resetStoredData() {
       totalTagged = 0;
       NUMBER_OF_VIDEOS_IN_FILE = 0;
       url_list = [];
@@ -557,270 +548,277 @@
       answers = [];
     }
 
-    // load file and get tagged data
+    // load progress file, store tagged data and fetch data to tag
     function loadTaggedFile(evt) {
-        resetStoredData();
-        let file = evt.target.files[0];
-        if (file){
-            VIDEO_FILE = file;
-            let reader = new FileReader();
-            reader.onloadend = function (evt) {
-                let dataUrl = evt.target.result;
-                // The following call results in an "Access denied" error in IE.
-                storeTaggedVid(dataUrl);
-            }
-            reader.readAsDataURL(file);
+      resetStoredData();
+      let file = evt.target.files[0];
+      if (file) {
+        VIDEO_FILE = file;
+        let reader = new FileReader();
+        reader.onloadend = function (evt) {
+          let dataUrl = evt.target.result;
+          // The following call results in an "Access denied" error in IE.
+          storeTaggedVid(dataUrl);
         }
+        reader.readAsDataURL(file);
+      }
     }
 
-    // STORE TAGGED VIDEO DATA
+    // store tagged video data and store all data in file for checking
     let storeTaggedVid = function (csvUrl) { // argument = csv file
-        d3.csv(csvUrl, function (rows) {
-            rows.forEach(function (d) { // for each row in the csv
-                NUMBER_OF_VIDEOS_IN_FILE++;
-                CONSTANT_DATA_IN_FILE.push({
-                  "embedUrl": d["embedUrl"],
-                  "videoId": d["videoId"],
-                  "hasTagged": false
-                })
-                let tagged = isTaggedRow(d);
-                if (tagged) {
-                  answers.push({
-                    "embedUrl": d["embedUrl"],
-                    "videoId": d["videoId"],
-                    "title": '\"' + d["title"] + '\"', //escaping comma in title
-                    "isIncluded": d["isIncluded"],
-                    "diagnostic": d["diagnostic"],
-                    "prognostic": d["prognostic"],
-                    "motivational": d["motivational"]
-                  })
-                  totalTagged++;
-                }
-                if (!tagged) {
-                  url_list.push({
-                    "embedUrl": d["embedUrl"],
-                    "videoId": d["videoId"],
-                    "title": '\"' + d["title"] + '\"'
-                  });
-                }
+      d3.csv(csvUrl, function (rows) {
+        rows.forEach(function (d) { // for each row in the csv
+          NUMBER_OF_VIDEOS_IN_FILE++;
+          let tagged = isTaggedRow(d);
+          CONSTANT_DATA_IN_FILE.push({
+            "embedUrl": d["embedUrl"],
+            "videoId": d["videoId"],
+            "hasTagged": tagged
+          })
+          if (tagged) {
+            answers.push({
+              "embedUrl": d["embedUrl"],
+              "videoId": d["videoId"],
+              "title": '\"' + d["title"] + '\"', //escaping comma in title
+              "isIncluded": d["isIncluded"],
+              "diagnostic": d["diagnostic"],
+              "prognostic": d["prognostic"],
+              "motivational": d["motivational"]
+            })
+            totalTagged++;
+          }
+          if (!tagged) {
+            url_list.push({
+              "embedUrl": d["embedUrl"],
+              "videoId": d["videoId"],
+              "title": '\"' + d["title"] + '\"'
             });
-            updateVideoUrl(currentIndex);
-            clearAnswers();
-        })
+          }
+        });
+        updateVideoUrl(currentIndex);
+        clearAnswers();
+      })
     }
 
+      //  check if a videoId is tagged
     function isTagged(videoId) {
-      for (var i=0; i<CONSTANT_DATA_IN_FILE.length; i++){
-          if (CONSTANT_DATA_IN_FILE[i]["videoId"] == videoId)
-            return CONSTANT_DATA_IN_FILE[i]["hasTagged"];
+      for (var i = 0; i < CONSTANT_DATA_IN_FILE.length; i++) {
+        if (CONSTANT_DATA_IN_FILE[i]["videoId"] == videoId)
+          return CONSTANT_DATA_IN_FILE[i]["hasTagged"];
       }
     }
 
-    function isTaggedRow(row){
-        if (row["diagnostic"] == "" || row["prognostic"] == "" || row["motivational"] == ""){
-          return false;
-      }
-        return true;
+    //  check if a whole row is tagged, for csv reading
+    function isTaggedRow(row) {
+      // excluding isIncluded checking because true/false value reading is messy
+      if (row["diagnostic"] == "" || row["prognostic"] == "" || row["motivational"] == "")
+        return false;
+      return true;
     }
 
+      //  update video frame by fetching next videoId and related data
     function updateVideoUrl(index) {
-        if (index < url_list.length) {
-            document.getElementById("videoframe").setAttribute("src", url_list[index]["embedUrl"]);
-            document.getElementById("link").href = url_list[index]["embedUrl"];
-            document.getElementById("title").innerText = url_list[index]["title"];
-            // document.getElementById("viewCount").innerText = parseInt(url_list[index]["viewCount"]).toString();
-        } else {
-            downloadCSV({filename: "progress_finished.csv"});
-        }
-        document.getElementById("totalVideosTagged").innerText =
-          totalTagged.toString() + "/" + NUMBER_OF_VIDEOS_IN_FILE.toString();
-        document.getElementById("videoId").innerText = url_list[index]["videoId"].substr(1);
+      if (index < url_list.length) {
+        document.getElementById("videoframe").setAttribute("src", url_list[index]["embedUrl"]);
+        document.getElementById("link").href = url_list[index]["embedUrl"];
+        document.getElementById("title").innerText = url_list[index]["title"];
+        // document.getElementById("viewCount").innerText = parseInt(url_list[index]["viewCount"]).toString();
+      } else
+        downloadCSV({filename: "progress_finished.csv"});
+      document.getElementById("totalVideosTagged").innerText =
+        totalTagged.toString() + "/" + NUMBER_OF_VIDEOS_IN_FILE.toString();
+      document.getElementById("videoId").innerText = url_list[index]["videoId"].substr(1);
     }
 
+    //  clear all answer choice and reshow all questions. This step is for when user
+    //  clicks Save and Next
     function clearAnswers() {
-        let choices = document.getElementsByClassName('checkbox');
-        for (var i = 0; i < choices.length; i++)
-            choices[i].checked = false;
+      let choices = document.getElementsByClassName('checkbox');
+      for (var i = 0; i < choices.length; i++)
+        choices[i].checked = false;
 
-        let radio_choices = document.getElementsByClassName("radio");
-        for (i = 0; i < radio_choices.length; i++)
-            radio_choices[i].checked = false;
-        hideAllQuestion(false);
+      let radio_choices = document.getElementsByClassName("radio");
+      for (i = 0; i < radio_choices.length; i++)
+        radio_choices[i].checked = false;
+      hideAllQuestion(false);
     }
 
     // Check that all questions have been answered
-    // If question 0 (include?) is "No," user can click save and next
+    // If question 0 (include?) is "No," user can click save and next without answering all questions
     function isCompleted() {
-        let completed = true;
-        let answer_list = [];
+      let completed = true;
+      let answer_list = [];
 
-        let include_question = document.getElementsByName("q0");
-        let hasCheckedInclude = false;
-        for (i = 0; i < include_question.length; i++) {
-            if (include_question[i].checked)
-                hasCheckedInclude = true;
-        }
-        let isIncluded = include_question[0].checked; //THE POSITION OF "YES" IN QUESTION 0
+      let include_question = document.getElementsByName("q0");
+      let hasCheckedInclude = false;
+      for (i = 0; i < include_question.length; i++) {
+        if (include_question[i].checked)
+          hasCheckedInclude = true;
+      }
+      let isIncluded = include_question[0].checked; //THE POSITION OF "YES" IN QUESTION 0
 
-        if (isIncluded) {
-            for (i = 0; i < NUMBER_OF_QUESTIONS; i++) {
-                let answered = false;
-                let choices = document.getElementsByName('q' + (i).toString());
-                for (j = 0; j < choices.length; j++) {
-                    let c = choices[j]
-                    if (c.checked)
-                        answered = true;
-                }
-                answer_list.push(answered);
-            }
-            for (k = 0; k < answer_list.length; k++) {
-                if (!answer_list[k])
-                    completed = false;
-            }
+      if (isIncluded) {
+        for (i = 0; i < NUMBER_OF_QUESTIONS; i++) {
+          let answered = false;
+          let choices = document.getElementsByName('q' + (i).toString());
+          for (j = 0; j < choices.length; j++) {
+            let c = choices[j]
+            if (c.checked)
+              answered = true;
+          }
+          answer_list.push(answered);
         }
-        if (!isIncluded) // video is not included
-            completed = true;
+        for (k = 0; k < answer_list.length; k++) {
+          if (!answer_list[k])
+            completed = false;
+        }
+      }
+      if (!isIncluded) // video is not included
+        completed = true;
 
-        if (completed && hasCheckedInclude) {
-            saveAnswers();
-        } else if (!completed || !hasCheckedInclude) {
-            window.alert("Not all questions have been answered.");
-        }
+      if (completed && hasCheckedInclude) {
+        saveAnswers();
+      } else if (!completed || !hasCheckedInclude)
+        window.alert("Not all questions have been answered.");
     }
 
 
     // function to calculate the result of the survey
     // AND SAVE THEM IN A GLOBAL VARIABLE CALLED answers
     function saveAnswers() {
-        let vid = url_list[currentIndex]["videoId"];
-        if (vid == "#NAME?") {
-            vid = url_list[currentIndex]["embedUrl"].split("https://www.youtube.com/embed/").pop();
-        }
-        tagging = {
-            "embedUrl": url_list[currentIndex]["embedUrl"],
-            "videoId": vid,
-            "title": url_list[currentIndex]["title"],
-        };
+      let vid = url_list[currentIndex]["videoId"];
+      if (vid == "#NAME?") {
+        vid = url_list[currentIndex]["embedUrl"].split("https://www.youtube.com/embed/").pop();
+      }
+      tagging = {
+        "embedUrl": url_list[currentIndex]["embedUrl"],
+        "videoId": vid,
+        "title": url_list[currentIndex]["title"],
+      };
 
-        // FOR FIRST QUESTION (YES/NO)
-        let zero_question_choices = document.getElementsByName("q0");
-        for (j = 0; j < zero_question_choices.length; j++) {
-            if (zero_question_choices[j].checked) {
-                tagging[FINAL_HEADER[0]] = zero_question_choices[j].value;
-            }
+      // FOR FIRST QUESTION (YES/NO)
+      let zero_question_choices = document.getElementsByName("q0");
+      for (j = 0; j < zero_question_choices.length; j++) {
+        if (zero_question_choices[j].checked) {
+          tagging[FINAL_HEADER[0]] = zero_question_choices[j].value;
         }
+      }
 
-        // FOR THE REST OF QUESTIONS 1-3 (Multiple choice)
-        for (i = 1; i < NUMBER_OF_QUESTIONS; i++) {
-            let choices = document.getElementsByName("q" + (i).toString());
-            let answers_local = [];
-            if (zero_question_choices[1].checked){
-              //pass
-            } else {
-              for (k = 0; k < choices.length; k++) {
-                if (choices[k].checked)
-                  answers_local.push(choices[k].value);
-              }
-            }
-            tagging[FINAL_HEADER[i]] = "[" + answers_local.join(';') + "]";
+      // FOR THE REST OF QUESTIONS 1-3 (Multiple choice)
+      for (i = 1; i < NUMBER_OF_QUESTIONS; i++) {
+        let choices = document.getElementsByName("q" + (i).toString());
+        let answers_local = [];
+        if (zero_question_choices[1].checked) {
+          //pass
+        } else {
+          for (k = 0; k < choices.length; k++) {
+            if (choices[k].checked)
+              answers_local.push(choices[k].value);
+          }
         }
-        answers.push(tagging);
-        setTagged(vid);
-        totalTagged++; currentIndex++;
-        clearAnswers();
-        updateVideoUrl(currentIndex);
-        window.scrollTo(0, 0);
+        tagging[FINAL_HEADER[i]] = "[" + answers_local.join(';') + "]";
+      }
+      answers.push(tagging);
+      setTagged(vid);
+      totalTagged++;
+      currentIndex++;
+      clearAnswers();
+      updateVideoUrl(currentIndex);
+      window.scrollTo(0, 0);
 
     }
 
-    function setTagged(videoId){
-      for (var i=0; i<CONSTANT_DATA_IN_FILE.length; i++){
+    //  indicate that the video has been tagged in global data keeper
+    function setTagged(videoId) {
+      for (var i = 0; i < CONSTANT_DATA_IN_FILE.length; i++) {
         if (CONSTANT_DATA_IN_FILE[i]["videoId"] == videoId)
           CONSTANT_DATA_IN_FILE[i]["hasTagged"] = true;
       }
     }
 
-    function copyList(destination, source, length){
-        destination = [];
-        for (var i=0; i<length; i++){
-          destination[i] = source[i];
-        }
-        return destination;
+    // copy a list by value
+    function copyList(destination, source, length) {
+      destination = [];
+      for (var i = 0; i < length; i++) {
+        destination[i] = source[i];
+      }
+      return destination;
     }
 
     // add the remaining untagged links to the progress.csv file when user clicks Finish and Download
-    function repopulateCSV(){
+    function repopulateCSV() {
       var answersToSave = copyList(answersToSave, answers, answers.length);
-      for (i=0; i<url_list.length; i++){
-          let item = url_list[i];
-          if (!isTagged(item["videoId"])){
-            answersToSave.push({
-              "embedUrl": item["embedUrl"],
-              "videoId": item["videoId"],
-              "title": item["title"],
-              "isIncluded": "",
-              "diagnostic": "",
-              "prognostic": "",
-              "motivational": ""
-            });
-          }
+      for (i = 0; i < url_list.length; i++) {
+        let item = url_list[i];
+        if (!isTagged(item["videoId"])) {
+          answersToSave.push({
+            "embedUrl": item["embedUrl"],
+            "videoId": item["videoId"],
+            "title": item["title"],
+            "isIncluded": "",
+            "diagnostic": "",
+            "prognostic": "",
+            "motivational": ""
+          });
+        }
       }
       return answersToSave;
     }
 
 
     function downloadCSV(args) {
-        var answersToSave = repopulateCSV();
-        if (answersToSave.length != NUMBER_OF_VIDEOS_IN_FILE)
-          throw new Error("error with csv output");
-        var data, filename, link;
-        var csv = convertArrayOfObjectsToCSV({
-            data: answersToSave
-        });
-        if (csv == null) return;
+      var answersToSave = repopulateCSV();
+      if (answersToSave.length != NUMBER_OF_VIDEOS_IN_FILE)
+        throw new Error("error with csv output");
+      var data, filename, link;
+      var csv = convertArrayOfObjectsToCSV({
+        data: answersToSave
+      });
+      if (csv == null) return;
 
-        filename = args.filename || 'export.csv';
+      filename = args.filename || 'export.csv';
 
-        // fixing # sign encoding error
-        let prefix = "data:text/csv;charset=utf-8,";
-        data = prefix + encodeURIComponent(csv);
+      // fixing # sign encoding error
+      let prefix = "data:text/csv;charset=utf-8,";
+      data = prefix + encodeURIComponent(csv);
 
-        link = document.createElement('a');
-        link.setAttribute('href', data);
-        link.setAttribute('download', filename);
-        link.click();
+      link = document.createElement('a');
+      link.setAttribute('href', data);
+      link.setAttribute('download', filename);
+      link.click();
     }
 
     function convertArrayOfObjectsToCSV(args) {
-        var result, ctr, keys, columnDelimiter, lineDelimiter, data;
+      var result, ctr, keys, columnDelimiter, lineDelimiter, data;
 
-        data = args.data || null;
-        if (data == null || !data.length) {
-            return null;
-        }
+      data = args.data || null;
+      if (data == null || !data.length) {
+        return null;
+      }
 
-        columnDelimiter = args.columnDelimiter || ',';
-        lineDelimiter = args.lineDelimiter || '\n';
+      columnDelimiter = args.columnDelimiter || ',';
+      lineDelimiter = args.lineDelimiter || '\n';
 
-        keys = Object.keys(data[0]);
+      keys = Object.keys(data[0]);
 
-        result = '';
-        result += keys.join(columnDelimiter);
-        result += lineDelimiter;
+      result = '';
+      result += keys.join(columnDelimiter);
+      result += lineDelimiter;
 
-        data.forEach(function (item) {
-            ctr = 0;
-            keys.forEach(function (key) {
-                if (ctr > 0) result += columnDelimiter;
+      data.forEach(function (item) {
+        ctr = 0;
+        keys.forEach(function (key) {
+          if (ctr > 0) result += columnDelimiter;
 
-                result += item[key];
-                ctr++;
-            });
-            result += lineDelimiter;
+          result += item[key];
+          ctr++;
         });
+        result += lineDelimiter;
+      });
 
-        return result;
+      return result;
     }
+
 </script>
 </body>
 </html>
