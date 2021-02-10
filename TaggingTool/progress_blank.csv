@@ -1,6 +1,6 @@
-embedUrl,videoId,title,isIncluded,diagnostic,prognostic,motivational_action,motivational_rationale
-https://www.youtube.com/embed/--_dsS5AFFw,:--_dsS5AFFw,TESTING 1,,,,,
-https://www.youtube.com/embed/YyQCzPXKnAw,:YyQCzPXKnAw,TESTING 2,,,,,
-https://www.youtube.com/embed/YY3Vnf0s7jw,:YY3Vnf0s7jw,TESTING 3,,,,,
-https://www.youtube.com/embed/-BRWSaYQhM0,:-BRWSaYQhM0,TESTING 4,,,,,
-https://www.youtube.com/embed/-gZBhlRuwqw,:-gZBhlRuwqw,TESTING 5,,,,,
+embedUrl,videoId,title,isIncluded,diagnostic,mention,prognostic,motivational_action,motivational_rationale
+https://www.youtube.com/embed/--_dsS5AFFw,:--_dsS5AFFw,TESTING 1,,,,,,
+https://www.youtube.com/embed/YyQCzPXKnAw,:YyQCzPXKnAw,TESTING 2,,,,,,
+https://www.youtube.com/embed/YY3Vnf0s7jw,:YY3Vnf0s7jw,TESTING 3,,,,,,
+https://www.youtube.com/embed/-BRWSaYQhM0,:-BRWSaYQhM0,TESTING 4,,,,,,
+https://www.youtube.com/embed/-gZBhlRuwqw,:-gZBhlRuwqw,TESTING 5,,,,,,
