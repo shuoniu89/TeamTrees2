@@ -684,7 +684,7 @@
           answers.push({
             "embedUrl": d["embedUrl"],
             "videoId": d["videoId"],
-            "title": '\"' + d["title"] + '\"', //escaping comma in title
+            "title": '\"' + d["title"].replaceAll('\"','')+ '\"', //escaping comma in title
             "isIncluded": d["isIncluded"],
             "diagnostic": d["diagnostic"],
             "mention": d["mention"],
@@ -698,7 +698,7 @@
           url_list.push({
             "embedUrl": d["embedUrl"],
             "videoId": d["videoId"],
-            "title": '\"' + d["title"] + '\"'
+            "title": '\"' + d["title"].replaceAll('\"','')+ '\"'
           });
         }
       });
