@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4176e5b9-8b40-4ca9-b2df-8a3ce17e4890" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../Snow_Tagging/snowtagged.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../Snow_Tagging/snowtagged.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.ipynb_checkpoints/kappa_score-checkpoint.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../.ipynb_checkpoints/kappa_score-checkpoint.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../agree_rate_snow_tagging.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../agree_rate_snow_tagging.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../generate_new_snow_tagging_file.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../generate_new_snow_tagging_file.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../kappa_score.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../kappa_score.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,7 +24,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../Clark_Univ/CS/CS201_WebDev/1.2 Tutorial" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager" selected="JavaScript Debug.tagging.html">
@@ -60,6 +59,7 @@
       <workItem from="1613437751145" duration="4897000" />
       <workItem from="1614097982960" duration="65000" />
       <workItem from="1614651899142" duration="619000" />
+      <workItem from="1614871622983" duration="1168000" />
     </task>
     <servers />
   </component>
