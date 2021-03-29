@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4176e5b9-8b40-4ca9-b2df-8a3ce17e4890" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../Snow_Tagging/catround42.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Snow_Tagging/snowtagged.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../Snow_Tagging/snowtagged.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tagging.html" beforeDir="false" afterPath="$PROJECT_DIR$/tagging.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../generate_new_snow_tagging_file.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../generate_new_snow_tagging_file.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../kappa_score.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../kappa_score.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,6 +61,13 @@
       <workItem from="1614871622983" duration="1168000" />
       <workItem from="1615433106157" duration="313000" />
       <workItem from="1615523605236" duration="1620000" />
+      <workItem from="1615922260243" duration="1232000" />
+      <workItem from="1616177067603" duration="145000" />
+      <workItem from="1616218567860" duration="1211000" />
+      <workItem from="1616445308567" duration="8366000" />
+      <workItem from="1617025909826" duration="595000" />
+      <workItem from="1617026823884" duration="175000" />
+      <workItem from="1617027046935" duration="602000" />
     </task>
     <servers />
   </component>
