@@ -2,6 +2,8 @@ Newest crawled data: YouTube_RAW_20210129/
 Date start crawling: 1/29/2021
 Date finish crawling: 1/29/2021
 Total TeamTrees videos unfiltered: 1445
+Total filtered: 411
+Total left in data set: 1034
 Version of clark-youtube-crawler used: 1.1.10
 Start date of videos being crawled: 10/25/2019
 End date of videos being crawled: 12/30/2019
